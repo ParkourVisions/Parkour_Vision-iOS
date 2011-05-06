@@ -437,13 +437,8 @@ static MapViewController *singleton;
 }
 
 - (void) setSearchError:(NSError*)error {
-	
-	NSString *msg = [NSString stringWithFormat:@"Error %d: %@",
-					 error.code,
-					 [error localizedDescription]];
-	
 	UIAlertView *searchErrorAlert = 
-		[[UIAlertView alloc] initWithTitle:@"Error" message:msg 
+		[[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"Error %d", error.code] message:[error localizedDescription] 
 								  delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
 	
 	[searchErrorAlert show];

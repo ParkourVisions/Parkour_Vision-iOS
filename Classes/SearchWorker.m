@@ -65,10 +65,14 @@
 	NSError *error = nil;
 	NSMutableArray *imageList = [FlickrAPI searchRegionMin:request.minCoord max:request.maxCoord error:&error];
 	
-	//if (error) {
-	//	[self performSelectorOnMainThread:@selector(setError:) withObject:error waitUntilDone:NO];
-	//	return;
-	//}
+	if (error) {
+		SearchError *searchError = [[SearchError alloc] init];
+		searchError.requestId = request.rid;
+		searchError.error = error;
+		[self performSelectorOnMainThread:@selector(setError:) withObject:searchError waitUntilDone:NO];
+		NSLog(@"Got error in call to searchRegionMin for rid: %d", searchError.requestId);
+		return;
+	}
 	
 	for (PKImage *image in imageList) {
 		// break out if another request comes in
@@ -105,9 +109,17 @@
 	[mapViewController addVisibleImages:result.pkImages];
 }
 
-- (void) setError:(NSError *)error {
-	MapViewController *mapViewController = [MapViewController getInstance];
-	[mapViewController setSearchError:error];
+- (void) setError:(SearchError *)error {
+	
+	// de-dupe errors coming in from multiple threads
+	// we check for request ID > 1 because two requests are made when the app first loads up
+	// (in order to pan to the user's location)
+	static int lastErrorRid = 0;
+	if (error.requestId > lastErrorRid && error.requestId > 1) {
+		MapViewController *mapViewController = [MapViewController getInstance];
+		[mapViewController setSearchError:error.error];
+		lastErrorRid = error.requestId;
+	}
 }
 
 @end

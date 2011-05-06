@@ -32,11 +32,14 @@
 #import "AccountViewController.h"
 #import "UploadInfo.h"
 #import "MapViewController.h"
+#import <ImageIO/CGImageProperties.h>
+#import <ImageIO/CGImageSource.h>
+#import <ImageIO/CGImageDestination.h>
 //#import "PostResult.h"
 
 @implementation MainNavController
 
-@synthesize mainView, editLocationVC, editInfoVC, editTagsVC, tabBarController, uploadNavController, accountVC, selectedImage, uploadFromCameraButton, mapViewController, uploadFromLibraryButton;
+@synthesize mainView, editLocationVC, editInfoVC, editTagsVC, tabBarController, uploadNavController, accountVC, uploadInfo, uploadFromCameraButton, mapViewController, uploadFromLibraryButton;
 
 
 // The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
@@ -124,13 +127,67 @@
 	[self configureUploadController];
 	tabBarController.selectedViewController = [tabBarController.viewControllers objectAtIndex:0];
 	
+	self.uploadInfo = [[[UploadInfo alloc] init] autorelease];
+	
 	//UIImage *img = [info objectForKey:UIImagePickerControllerEditedImage];
 	//if (img == nil) {
 	//	img = [info objectForKey:UIImagePickerControllerOriginalImage];
 	//}
 	UIImage *img = [info objectForKey:UIImagePickerControllerOriginalImage];
 	
-	self.selectedImage = img;
+	NSData *imageData = UIImageJPEGRepresentation(img, 1.0);
+	uploadInfo.imageData = imageData;
+	uploadInfo.image = img;
+	
+	NSDictionary *metaData = [info objectForKey:UIImagePickerControllerMediaMetadata];
+	if (metaData != nil) {
+		NSDictionary *exifData = [metaData objectForKey:(NSString*)kCGImagePropertyExifDictionary];
+		if (exifData != nil) {
+			uploadInfo.exifData = exifData;
+			NSLog(@"exifData: %@", [exifData description]);
+			
+			CGImageSourceRef source = CGImageSourceCreateWithData((CFDataRef)imageData, nil);
+			
+			CFStringRef UTI = CGImageSourceGetType(source);
+			
+			NSMutableData *dataOut = [NSMutableData data];
+			
+			CGImageDestinationRef destination = CGImageDestinationCreateWithData((CFMutableDataRef)dataOut,UTI,1,NULL);
+		
+			if (destination) {
+				CGImageDestinationAddImageFromSource(destination,source,0, (CFDictionaryRef) metaData);
+				if (CGImageDestinationFinalize(destination)) {
+					NSLog(@"Using image with exif data added");
+					uploadInfo.imageData = dataOut;
+					uploadInfo.image = [UIImage imageWithData:dataOut];
+					CFRelease(destination);
+				}
+				else {
+					NSLog(@"Could not finalize destination image with exifData");
+				}
+			}
+			else {
+				NSLog(@"Could not create CGImageDestinationRef");
+			}
+			
+			CFRelease(source);
+		}
+	}
+	/*
+	else {
+		// attempt to get meta data from image directly
+		NSLog(@"attempt to get meta data from image directly");
+		CGImageSourceRef source = CGImageSourceCreateWithData((CFDataRef)imageData, nil);
+		NSDictionary *metaData = (NSDictionary *) CGImageSourceCopyPropertiesAtIndex(source,0,NULL);
+		if (metaData != nil) {
+			NSDictionary *exifData = [metaData objectForKey:(NSString*)kCGImagePropertyExifDictionary];
+			if (exifData != nil) {
+				uploadInfo.exifData = exifData;
+				NSLog(@"exifData: %@", [exifData description]);
+			}
+		}
+	}
+	 */
 	
 	[self dismissModalViewControllerAnimated:NO];
 	//UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:tabBarController];
@@ -154,7 +211,7 @@
 	if (buttonIndex == 1) {
 		[self dismissModalViewControllerAnimated:NO];
 		
-		UploadInfo *uploadInfo = [self createUploadInfo];
+		[self populateUploadInfo];
 		UploadProgressController *progressController = [[UploadProgressController alloc] initWithUploadInfo:uploadInfo];
 		
 		[self.navigationController pushViewController:progressController animated:NO];
@@ -163,15 +220,11 @@
 	}
 }
 
-- (UploadInfo*) createUploadInfo {
-	UploadInfo *info = [[UploadInfo alloc] init];
-	info.image = selectedImage;
-	info.title = [editInfoVC getTitle];
-	info.desc = [editInfoVC getDesc];
-	info.tags = [editTagsVC getTags];
-	info.coord = [editLocationVC getCoord];
-	
-	return [info autorelease];
+- (void) populateUploadInfo {
+	uploadInfo.title = [editInfoVC getTitle];
+	uploadInfo.desc = [editInfoVC getDesc];
+	uploadInfo.tags = [editTagsVC getTags];
+	uploadInfo.coord = [editLocationVC getCoord];
 }
 
 - (void) viewWillAppear:(BOOL)animated {

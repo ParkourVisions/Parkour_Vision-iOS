@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1B1B858E1372166D004F262B /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B1B858D1372166D004F262B /* ImageIO.framework */; };
 		1B35A49B1354FD5900D5185B /* SearchOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B35A49A1354FD5900D5185B /* SearchOperation.m */; };
 		1B72F00B134C12FF00E9CBCC /* MainNavController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B72F009134C12FF00E9CBCC /* MainNavController.m */; };
 		1B72F00C134C12FF00E9CBCC /* MainNavController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1B72F00A134C12FF00E9CBCC /* MainNavController.xib */; };
@@ -47,6 +48,7 @@
 		1B875A31134FBF3700E11BBF /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B875A30134FBF3700E11BBF /* Security.framework */; };
 		1B875A33134FBF3700E11BBF /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B875A32134FBF3700E11BBF /* SystemConfiguration.framework */; };
 		1B875B0613500CDF00E11BBF /* PostResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B875B0513500CDF00E11BBF /* PostResult.m */; };
+		1BAD1737137492D400652A7A /* SearchError.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BAD1736137492D400652A7A /* SearchError.m */; };
 		1BBAE06313662CB000B8C72C /* ImageDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1BBAE06213662CB000B8C72C /* ImageDetailViewController.xib */; };
 		1BC4AEB91352620D00B8BC3D /* LinkedList.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BC4AEB61352620D00B8BC3D /* LinkedList.m */; };
 		1BC4AEBA1352620D00B8BC3D /* LinkedListNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BC4AEB71352620D00B8BC3D /* LinkedListNode.m */; };
@@ -68,6 +70,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1B1B858D1372166D004F262B /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		1B35A4991354FD5900D5185B /* SearchOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchOperation.h; sourceTree = "<group>"; };
 		1B35A49A1354FD5900D5185B /* SearchOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchOperation.m; sourceTree = "<group>"; };
 		1B72F008134C12FF00E9CBCC /* MainNavController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainNavController.h; sourceTree = "<group>"; };
@@ -140,6 +143,8 @@
 		1B875A32134FBF3700E11BBF /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		1B875B0413500CDF00E11BBF /* PostResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostResult.h; sourceTree = "<group>"; };
 		1B875B0513500CDF00E11BBF /* PostResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostResult.m; sourceTree = "<group>"; };
+		1BAD1735137492D400652A7A /* SearchError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchError.h; sourceTree = "<group>"; };
+		1BAD1736137492D400652A7A /* SearchError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchError.m; sourceTree = "<group>"; };
 		1BBAE06213662CB000B8C72C /* ImageDetailViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImageDetailViewController.xib; sourceTree = "<group>"; };
 		1BBAE15B1368BF4100B8C72C /* Entitlements.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Entitlements.plist; sourceTree = "<group>"; };
 		1BC4AEB51352620D00B8BC3D /* LinkedList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LinkedList.h; sourceTree = "<group>"; };
@@ -191,6 +196,7 @@
 				1B875A2B134FBF1900E11BBF /* MobileCoreServices.framework in Frameworks */,
 				1B875A31134FBF3700E11BBF /* Security.framework in Frameworks */,
 				1B875A33134FBF3700E11BBF /* SystemConfiguration.framework in Frameworks */,
+				1B1B858E1372166D004F262B /* ImageIO.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -259,6 +265,8 @@
 				1BFBA30E1358F7240007E147 /* ImageInfo.h */,
 				1BFBA30F1358F7240007E147 /* ImageInfo.m */,
 				1BBAE06213662CB000B8C72C /* ImageDetailViewController.xib */,
+				1BAD1735137492D400652A7A /* SearchError.h */,
+				1BAD1736137492D400652A7A /* SearchError.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -370,6 +378,7 @@
 				1B875A2A134FBF1900E11BBF /* MobileCoreServices.framework */,
 				1B875A30134FBF3700E11BBF /* Security.framework */,
 				1B875A32134FBF3700E11BBF /* SystemConfiguration.framework */,
+				1B1B858D1372166D004F262B /* ImageIO.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -481,6 +490,7 @@
 				1BC4AEE41352650800B8BC3D /* ImageDetailViewController.m in Sources */,
 				1B35A49B1354FD5900D5185B /* SearchOperation.m in Sources */,
 				1BFBA3101358F7240007E147 /* ImageInfo.m in Sources */,
+				1BAD1737137492D400652A7A /* SearchError.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

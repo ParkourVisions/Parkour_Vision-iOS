@@ -46,7 +46,7 @@
 	UIButton *uploadFromLibraryButton;
 	MapViewController *mapViewController;
 	
-	UIImage *selectedImage;
+	UploadInfo *uploadInfo;
 }
 
 @property (nonatomic, retain) IBOutlet UIView *mainView;
@@ -61,7 +61,7 @@
 @property (nonatomic, retain) IBOutlet UITabBarController *tabBarController;
 @property (nonatomic, retain) MapViewController *mapViewController;
 
-@property (nonatomic, retain) UIImage *selectedImage;
+@property (nonatomic, retain) UploadInfo *uploadInfo;
 
 - (IBAction) uploadFromCamera:(id)sender;
 - (IBAction) uploadFromLibrary:(id)sender;
@@ -73,6 +73,6 @@
 - (IBAction) submitUpload:(id)sender;
 
 - (void) configureUploadController;
-- (UploadInfo*) createUploadInfo;
+- (void) populateUploadInfo;
 
 @end

@@ -27,6 +27,7 @@
 #import <Foundation/Foundation.h>
 #import "SearchRequest.h"
 #import "SearchResult.h"
+#import "SearchError.h"
 
 @interface SearchWorker : NSObject {
 
@@ -36,6 +37,6 @@
 // already loaded
 - (void) search:(SearchRequest*)request curImages:(NSDictionary*)curImageIds;
 - (void) updateModel:(SearchResult*)result;
-- (void) setError:(NSError*)error;
+- (void) setError:(SearchError*)error;
 
 @end

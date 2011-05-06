@@ -29,11 +29,11 @@
 
 @implementation UploadInfo
 
-@synthesize image, title, desc, tags, coord;
+@synthesize image, title, desc, tags, coord, imageData, exifData;
 
 - (NSString *)description {
-	return [NSString stringWithFormat:@"image:%@ title:%@ desc:%@ tags:%@ coord:(%f, %f)",
-			[image description], title, desc, [tags description], coord.latitude, coord.longitude];
+	return [NSString stringWithFormat:@"title:%@ desc:%@ tags:%@ coord:(%f, %f)",
+			title, desc, [tags description], coord.latitude, coord.longitude];
 }
 
 - (NSString*) getTagString {
@@ -46,6 +46,16 @@
 	}
 	
 	return [str autorelease];
+}
+
+- (void) dealloc {
+	[imageData release];
+	[image release];
+	[title release];
+	[desc release];
+	[tags release];
+	[exifData release];
+	[super dealloc];
 }
 
 @end

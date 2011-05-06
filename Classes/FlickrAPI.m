@@ -32,6 +32,9 @@
 #include <libkern/OSAtomic.h>
 #import "ImageInfo.h"
 
+#import <ImageIO/CGImageProperties.h>
+#import <ImageIO/CGImageSource.h>
+
 // configurable constants
 static int RESULTS_PER_PAGE = 7;
 static NSString *PK_GROUP_ID = @"819314@N20";
@@ -109,6 +112,7 @@ static NSCache *infoCache;
 	
 	if (myError) {
 		NSLog(@"Got error: %@", [myError description]);
+		*error = myError;
 	}
 	else {
 		NSString *jsonString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
@@ -174,62 +178,6 @@ static NSCache *infoCache;
 	pkImage.coord = imageInfo.location;
 }
 
-/*
-+ (void) uploadPhoto:(UploadInfo*)uploadInfo {
-	NSString *authToken = [[NSUserDefaults standardUserDefaults] stringForKey:@"auth_token"];
-	
-	NSMutableDictionary *args = [[NSMutableDictionary alloc] init];
-	[args setObject:API_KEY forKey:@"api_key"];
-	[args setObject:@"json" forKey:@"format"];
-	[args setObject:@"1" forKey:@"nojsoncallback"];
-	[args setObject:authToken forKey:@"auth_token"];
-	[args setObject:@"1" forKey:@"is_public"];
-	
-	if ([uploadInfo.title length] != 0)
-		[args setObject:uploadInfo.title forKey:@"title"];
-	
-	if ([uploadInfo.desc length] != 0)
-		[args setObject:uploadInfo.desc forKey:@"description"];
-	
-	NSString *tagString = [uploadInfo getTagString];
-	if ([tagString length] != 0)
-		[args setObject:tagString forKey:@"tags"];
-	
-	NSString *sig = [FlickrAPI apiSigFromArgs:args];
-	
-	ASIFormDataRequest *request = 
-		[[ASIFormDataRequest alloc] initWithURL:[NSURL URLWithString:@"http://api.flickr.com/services/upload"]];
-	
-	[request addPostValue:API_KEY forKey:@"api_key"];
-	[request addPostValue:sig forKey:@"api_sig"];
-	[request addPostValue:authToken forKey:@"auth_token"];
-	[request addPostValue:@"json" forKey:@"format"];
-	[request addPostValue:@"1" forKey:@"nojsoncallback"];
-	[request addPostValue:@"1" forKey:@"is_public"];
-	
-	if ([uploadInfo.title length] != 0)
-		[request addPostValue:uploadInfo.title forKey:@"title"];
-	
-	if ([uploadInfo.desc length] != 0)
-		[request addPostValue:uploadInfo.desc forKey:@"description"];
-	
-	if ([tagString length] != 0)
-		[request addPostValue:tagString forKey:@"tags"];
-
-	
-	NSData *imageData = UIImageJPEGRepresentation(uploadInfo.image, 90);
-	[request addData:imageData forKey:@"photo"];
-	
-	[request startSynchronous];
-	
-	NSString *response = [request responseString];
-	NSLog(@"response: %@", response);
-	
-	[request release];
-	[args release];
-}
- */
-
 + (PostResult*) uploadPhoto:(UploadInfo*)uploadInfo {
 	
 	NSMutableDictionary *postData = [[NSMutableDictionary alloc] init];
@@ -239,7 +187,7 @@ static NSCache *infoCache;
 	[postData setObject:[uploadInfo getTagString] forKey:@"tags"];
 	
 	PostResult *result = 
-		[FlickrAPI postToUrl:@"http://api.flickr.com/services/upload" postData:postData photo:uploadInfo.image];
+		[FlickrAPI postToUrl:@"http://api.flickr.com/services/upload" postData:postData image:uploadInfo.imageData];
 	
 	[postData release];
 	return result;
@@ -252,7 +200,7 @@ static NSCache *infoCache;
 	[postData setObject:groupId forKey:@"group_id"];
 	
 	PostResult *result = 
-		[FlickrAPI postToUrl:@"http://api.flickr.com/services/rest" postData:postData photo:nil];
+		[FlickrAPI postToUrl:@"http://api.flickr.com/services/rest" postData:postData image:nil];
 	
 	[postData release];
 	return result;
@@ -266,13 +214,13 @@ static NSCache *infoCache;
 	[postData setObject:[NSString stringWithFormat:@"%f", coord.longitude] forKey:@"lon"];
 	
 	PostResult *result = 
-		[FlickrAPI postToUrl:@"http://api.flickr.com/services/rest" postData:postData photo:nil];
+		[FlickrAPI postToUrl:@"http://api.flickr.com/services/rest" postData:postData image:nil];
 	
 	[postData release];
 	return result;
 }
 
-+ (PostResult*) postToUrl:(NSString*)urlString postData:(NSDictionary*)postData photo:(UIImage*)photo {
++ (PostResult*) postToUrl:(NSString*)urlString postData:(NSDictionary*)postData image:(NSData*)imageData {
 	
 	NSMutableDictionary *myDict = [[NSMutableDictionary alloc] init];
 	[myDict addEntriesFromDictionary:postData];
@@ -298,8 +246,9 @@ static NSCache *infoCache;
 	}
 	[myDict release];
 	
-	if (photo != nil) {
-		NSData *imageData = UIImageJPEGRepresentation(photo, 90);
+	if (imageData != nil) {
+		int len = [imageData length];
+		NSLog(@"Setting imageData with %d bytes", len);
 		[request addData:imageData forKey:@"photo"];
 	}
 	
@@ -314,49 +263,15 @@ static NSCache *infoCache;
 	else {
 		result.isOK = NO;
 		result.errorMessage = [request responseStatusMessage];
+		if (result.errorMessage == nil) {
+			result.errorMessage = [NSString stringWithFormat:@"%d", request.responseStatusCode];
+		}
 	}
 	
 	[FlickrAPI incrementApiCount];
 	[request release];
 	return [result autorelease];
 }
-
-/*
-+ (void) addPhoto:(NSString*)photoId toGroup:(NSString*)groupId {
-	NSString *authToken = [[NSUserDefaults standardUserDefaults] stringForKey:@"auth_token"];
-	
-	NSMutableDictionary *args = [[NSMutableDictionary alloc] init];
-	[args setObject:@"flickr.groups.pools.add" forKey:@"method"];
-	[args setObject:API_KEY forKey:@"api_key"];
-	[args setObject:@"json" forKey:@"format"];
-	[args setObject:@"1" forKey:@"nojsoncallback"];
-	[args setObject:photoId forKey:@"photo_id"];
-	[args setObject:groupId forKey:@"group_id"];
-	[args setObject:authToken forKey:@"auth_token"];
-	
-	NSString *sig = [FlickrAPI apiSigFromArgs:args];
-	
-	ASIFormDataRequest *request = 
-		[[ASIFormDataRequest alloc] initWithURL:[NSURL URLWithString:@"http://api.flickr.com/services/rest"]];
-	
-	[request addPostValue:API_KEY forKey:@"api_key"];
-	[request addPostValue:photoId forKey:@"photo_id"];
-	[request addPostValue:groupId forKey:@"group_id"];
-	[request addPostValue:@"flickr.groups.pools.add" forKey:@"method"];
-	[request addPostValue:sig forKey:@"api_sig"];
-	[request addPostValue:authToken forKey:@"auth_token"];
-	[request addPostValue:@"json" forKey:@"format"];
-	[request addPostValue:@"1" forKey:@"nojsoncallback"];
-	
-	[request startSynchronous];
-	
-	NSString *response = [request responseString];
-	NSLog(@"response: %@", response);
-	
-	[args release];
-	[request release];	
-}
-*/
 
 + (AuthResult*) authenticate:(NSString*)frob {
 

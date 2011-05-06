@@ -30,16 +30,20 @@
 @interface UploadInfo : NSObject {
 
 	UIImage *image;
+	NSData *imageData;
 	NSString *title;
 	NSString *desc;
 	NSArray *tags;
+	NSDictionary *exifData;
 	CLLocationCoordinate2D coord;
 }
 
 @property (nonatomic, retain) UIImage *image;
+@property (nonatomic, retain) NSData *imageData;
 @property (nonatomic, retain) NSString *title;
 @property (nonatomic, retain) NSString *desc;
 @property (nonatomic, retain) NSArray *tags;
+@property (nonatomic, retain) NSDictionary *exifData;
 @property (nonatomic, assign) CLLocationCoordinate2D coord;
 
 - (NSString*) getTagString;
