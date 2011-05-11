@@ -19,65 +19,48 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  * 
- * MainNavController.h
+ * UploadStatusController.h
  * author: emancebo
- * 4/5/11
+ * 5/6/11
  */
 
 #import <UIKit/UIKit.h>
 
-@class EditLocationViewController;
-@class EditInfoViewController;
-@class EditTagsViewController;
-@class AccountViewController;
-@class UploadInfo;
-@class MapViewController;
-@class UploadStatusController;
+#import "EditInfoViewController.h"
+#import "EditLocationViewController.h"
+#import "EditTagsViewController.h"
+#import "UploadInfo.h"
+#import "UploadTask.h"
 
-@interface MainNavController : UIViewController <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIAlertViewDelegate> {
-	UIView *mainView;
-	
+@interface UploadStatusController : UIViewController <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIAlertViewDelegate, UITableViewDataSource, UploadTaskDelegate> {
+
+	UITableView *tableView;
 	EditLocationViewController *editLocationVC;
 	EditInfoViewController *editInfoVC;
 	EditTagsViewController *editTagsVC;
-	AccountViewController *accountVC;
 	UITabBarController *tabBarController;
 	UINavigationController *uploadNavController;
-	UIButton *uploadFromCameraButton;
-	UIButton *uploadFromLibraryButton;
-	UIButton *uploadsButton;
-	MapViewController *mapViewController;
-	UploadStatusController *uploadStatusController;
-	
 	UploadInfo *uploadInfo;
+	
+	UITableViewCell *tvCell;
+	
+	NSMutableArray *uploadQueue;
+	NSMutableDictionary *uploadTaskToProgressView;
 }
 
-@property (nonatomic, retain) IBOutlet UIView *mainView;
-
-@property (nonatomic, retain) IBOutlet UIButton *uploadFromCameraButton;
-@property (nonatomic, retain) IBOutlet UIButton *uploadFromLibraryButton;
-@property (nonatomic, retain) IBOutlet UIButton *uploadsButton;
-@property (nonatomic, retain) IBOutlet AccountViewController *accountVC;
+@property (nonatomic, retain) IBOutlet UITableView *tableView;
 @property (nonatomic, retain) EditLocationViewController *editLocationVC;
 @property (nonatomic, retain) EditInfoViewController *editInfoVC;
 @property (nonatomic, retain) EditTagsViewController *editTagsVC;
 @property (nonatomic, retain) IBOutlet UINavigationController *uploadNavController;
 @property (nonatomic, retain) IBOutlet UITabBarController *tabBarController;
-@property (nonatomic, retain) MapViewController *mapViewController;
-@property (nonatomic, retain) UploadStatusController *uploadStatusController;
-
 @property (nonatomic, retain) UploadInfo *uploadInfo;
 
-- (IBAction) uploadFromCamera:(id)sender;
-- (IBAction) uploadFromLibrary:(id)sender;
-- (IBAction) viewUploads:(id)sender;
+@property (nonatomic, assign) IBOutlet UITableViewCell *tvCell;
 
-- (IBAction) browse:(id)sender;
-- (IBAction) account:(id)sender;
-
-- (IBAction) cancelUploadPhoto:(id)sender;
+- (void) onNewUpload:(id)sender;
 - (IBAction) submitUpload:(id)sender;
-
+- (IBAction) cancelUploadPhoto:(id)sender;
 - (void) configureUploadController;
 - (void) populateUploadInfo;
 

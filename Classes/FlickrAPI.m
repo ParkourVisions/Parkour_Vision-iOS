@@ -255,6 +255,7 @@ static NSCache *infoCache;
 	[request startSynchronous];
 	
 	PostResult *result = [[PostResult alloc] init];
+	result.statusCode = request.responseStatusCode;
 	if (request.responseStatusCode == 200) {
 		result.rawResponse = [request responseString];
 		[result populateFromXmlResponse:result.rawResponse];

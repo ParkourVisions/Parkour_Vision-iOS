@@ -19,31 +19,51 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  * 
- * PostResult.h
+ * UploadTask.h
  * author: emancebo
- * 4/8/11
+ * 5/9/11
  */
 
 #import <Foundation/Foundation.h>
 
-// result from posting to flickr api
-@interface PostResult : NSObject <NSXMLParserDelegate> {
-	BOOL isOK;
-	int statusCode;
-	NSString *errorMessage;
-	NSString *rawResponse;
-	NSString *photoId;
+#import "UploadInfo.h"
+#import "PostResult.h"
+@class UploadTask;
+
+@protocol UploadTaskDelegate<NSObject>
+@required
+- (void) uploadFinished:(UploadTask*)task;
+- (void) progressUpdated:(UploadTask*)task;
+@end
+
+@interface UploadTask : NSObject {
+
+	UploadInfo *uploadInfo;
+	id<UploadTaskDelegate> delegate;
 	
-	// private, for xml parsing
-	BOOL inPhotoID;
+	BOOL mDone;
+	float mProgress;
+	NSString *mErrorMessage;
+	
+	int taskId;
 }
 
-@property (nonatomic, assign) BOOL isOK;
-@property (nonatomic, assign) int statusCode;
-@property (nonatomic, retain) NSString *errorMessage;
-@property (nonatomic, retain) NSString *rawResponse;
-@property (nonatomic, retain) NSString *photoId;
+@property (nonatomic, readonly) int taskId;
+@property (nonatomic, retain) UploadInfo *uploadInfo;
+@property (nonatomic, retain) id<UploadTaskDelegate> delegate;
 
-- (void) populateFromXmlResponse:(NSString*)response;
+- (NSNumber*) taskIdNumber;
+
+- (id) initWithUploadInfo:(UploadInfo*)info;
+- (void) startInBackground;
+
+- (float) getProgress; // returns number between 0 and 1.0
+- (BOOL) isDone;
+- (NSString*) getError; // returns nil if no error
+
+- (void) notifyDelegateDone:(PostResult*)result;
+- (void) notifyDelegateProgress;
 
 @end
+
+

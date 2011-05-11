@@ -29,7 +29,7 @@
 
 @implementation PostResult
 
-@synthesize isOK, errorMessage, rawResponse, photoId;
+@synthesize isOK, errorMessage, rawResponse, photoId, statusCode;
 
 - (id) init {
 	self = [super init];

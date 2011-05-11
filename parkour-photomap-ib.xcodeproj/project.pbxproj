@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		1B1B858E1372166D004F262B /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B1B858D1372166D004F262B /* ImageIO.framework */; };
 		1B35A49B1354FD5900D5185B /* SearchOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B35A49A1354FD5900D5185B /* SearchOperation.m */; };
+		1B40E50B1378B3A800CCACE9 /* UploadTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B40E50A1378B3A800CCACE9 /* UploadTask.m */; };
+		1B40E5D1137A2C8900CCACE9 /* UploadTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1B40E5D0137A2C8900CCACE9 /* UploadTableViewCell.xib */; };
 		1B72F00B134C12FF00E9CBCC /* MainNavController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B72F009134C12FF00E9CBCC /* MainNavController.m */; };
 		1B72F00C134C12FF00E9CBCC /* MainNavController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1B72F00A134C12FF00E9CBCC /* MainNavController.xib */; };
 		1B72F037134C1E5F00E9CBCC /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B72F036134C1E5F00E9CBCC /* MapKit.framework */; };
@@ -49,6 +51,8 @@
 		1B875A33134FBF3700E11BBF /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B875A32134FBF3700E11BBF /* SystemConfiguration.framework */; };
 		1B875B0613500CDF00E11BBF /* PostResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B875B0513500CDF00E11BBF /* PostResult.m */; };
 		1BAD1737137492D400652A7A /* SearchError.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BAD1736137492D400652A7A /* SearchError.m */; };
+		1BAD17771374BAC500652A7A /* UploadStatusController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BAD17751374BAC500652A7A /* UploadStatusController.m */; };
+		1BAD17781374BAC500652A7A /* UploadStatusController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1BAD17761374BAC500652A7A /* UploadStatusController.xib */; };
 		1BBAE06313662CB000B8C72C /* ImageDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1BBAE06213662CB000B8C72C /* ImageDetailViewController.xib */; };
 		1BC4AEB91352620D00B8BC3D /* LinkedList.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BC4AEB61352620D00B8BC3D /* LinkedList.m */; };
 		1BC4AEBA1352620D00B8BC3D /* LinkedListNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BC4AEB71352620D00B8BC3D /* LinkedListNode.m */; };
@@ -73,6 +77,9 @@
 		1B1B858D1372166D004F262B /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		1B35A4991354FD5900D5185B /* SearchOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchOperation.h; sourceTree = "<group>"; };
 		1B35A49A1354FD5900D5185B /* SearchOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchOperation.m; sourceTree = "<group>"; };
+		1B40E5091378B3A800CCACE9 /* UploadTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UploadTask.h; sourceTree = "<group>"; };
+		1B40E50A1378B3A800CCACE9 /* UploadTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UploadTask.m; sourceTree = "<group>"; };
+		1B40E5D0137A2C8900CCACE9 /* UploadTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UploadTableViewCell.xib; sourceTree = "<group>"; };
 		1B72F008134C12FF00E9CBCC /* MainNavController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainNavController.h; sourceTree = "<group>"; };
 		1B72F009134C12FF00E9CBCC /* MainNavController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainNavController.m; sourceTree = "<group>"; };
 		1B72F00A134C12FF00E9CBCC /* MainNavController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainNavController.xib; sourceTree = "<group>"; };
@@ -145,6 +152,9 @@
 		1B875B0513500CDF00E11BBF /* PostResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostResult.m; sourceTree = "<group>"; };
 		1BAD1735137492D400652A7A /* SearchError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchError.h; sourceTree = "<group>"; };
 		1BAD1736137492D400652A7A /* SearchError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchError.m; sourceTree = "<group>"; };
+		1BAD17741374BAC500652A7A /* UploadStatusController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UploadStatusController.h; sourceTree = "<group>"; };
+		1BAD17751374BAC500652A7A /* UploadStatusController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UploadStatusController.m; sourceTree = "<group>"; };
+		1BAD17761374BAC500652A7A /* UploadStatusController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UploadStatusController.xib; sourceTree = "<group>"; };
 		1BBAE06213662CB000B8C72C /* ImageDetailViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImageDetailViewController.xib; sourceTree = "<group>"; };
 		1BBAE15B1368BF4100B8C72C /* Entitlements.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Entitlements.plist; sourceTree = "<group>"; };
 		1BC4AEB51352620D00B8BC3D /* LinkedList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LinkedList.h; sourceTree = "<group>"; };
@@ -267,6 +277,12 @@
 				1BBAE06213662CB000B8C72C /* ImageDetailViewController.xib */,
 				1BAD1735137492D400652A7A /* SearchError.h */,
 				1BAD1736137492D400652A7A /* SearchError.m */,
+				1BAD17741374BAC500652A7A /* UploadStatusController.h */,
+				1BAD17751374BAC500652A7A /* UploadStatusController.m */,
+				1BAD17761374BAC500652A7A /* UploadStatusController.xib */,
+				1B40E5091378B3A800CCACE9 /* UploadTask.h */,
+				1B40E50A1378B3A800CCACE9 /* UploadTask.m */,
+				1B40E5D0137A2C8900CCACE9 /* UploadTableViewCell.xib */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -440,6 +456,8 @@
 				1B8756B7134CFBF500E11BBF /* UploadProgressController.xib in Resources */,
 				1B8756E1134D067C00E11BBF /* AccountViewController.xib in Resources */,
 				1BBAE06313662CB000B8C72C /* ImageDetailViewController.xib in Resources */,
+				1BAD17781374BAC500652A7A /* UploadStatusController.xib in Resources */,
+				1B40E5D1137A2C8900CCACE9 /* UploadTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -491,6 +509,8 @@
 				1B35A49B1354FD5900D5185B /* SearchOperation.m in Sources */,
 				1BFBA3101358F7240007E147 /* ImageInfo.m in Sources */,
 				1BAD1737137492D400652A7A /* SearchError.m in Sources */,
+				1BAD17771374BAC500652A7A /* UploadStatusController.m in Sources */,
+				1B40E50B1378B3A800CCACE9 /* UploadTask.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

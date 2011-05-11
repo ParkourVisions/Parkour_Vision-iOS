@@ -32,6 +32,7 @@
 #import "AccountViewController.h"
 #import "UploadInfo.h"
 #import "MapViewController.h"
+#import "UploadStatusController.h"
 #import <ImageIO/CGImageProperties.h>
 #import <ImageIO/CGImageSource.h>
 #import <ImageIO/CGImageDestination.h>
@@ -39,7 +40,7 @@
 
 @implementation MainNavController
 
-@synthesize mainView, editLocationVC, editInfoVC, editTagsVC, tabBarController, uploadNavController, accountVC, uploadInfo, uploadFromCameraButton, mapViewController, uploadFromLibraryButton;
+@synthesize mainView, editLocationVC, editInfoVC, editTagsVC, tabBarController, uploadNavController, accountVC, uploadInfo, uploadFromCameraButton, mapViewController, uploadFromLibraryButton, uploadsButton, uploadStatusController;
 
 
 // The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
@@ -57,6 +58,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 	mapViewController = [MapViewController getInstance];
+	uploadStatusController = [[UploadStatusController alloc] init];
 }
 
 - (void) configureUploadController {
@@ -103,6 +105,10 @@
 
 - (IBAction) account:(id)sender {
 	[self.navigationController pushViewController:accountVC animated:YES];
+}
+
+- (IBAction) viewUploads:(id)sender {
+	[self.navigationController pushViewController:uploadStatusController animated:YES];
 }
 
 - (IBAction) uploadFromCamera:(id)sender {
@@ -258,6 +264,7 @@
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
 	self.tabBarController = nil;
+	self.uploadStatusController = nil;
 }
 
 
