@@ -19,24 +19,28 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  * 
- * SearchWorker.h
+ * NavLauncher.h
  * author: emancebo
- * 3/23/11
+ * 5/11/11
  */
 
 #import <Foundation/Foundation.h>
-#import "SearchRequest.h"
-#import "SearchResult.h"
-#import "SearchError.h"
 
-@interface SearchWorker : NSObject {
+#import "AccountViewController.h"
+#import "UploadStatusController.h"
 
+@interface NavLauncher : NSObject {
+	AccountViewController *accountViewController;
+	UploadStatusController *uploadStatusController;
+	
+	UINavigationController *navigationController;
 }
 
-// curImages provided to prevent refetching info for images that were
-// already loaded
-- (void) search:(SearchRequest*)request curImages:(NSDictionary*)curImageIds;
-- (void) updateModel:(SearchResult*)result;
-- (void) setError:(SearchError*)error;
+- (void) onUploadButton:(id)sender;
+- (void) onAccountButton:(id)sender;
+
+@property (nonatomic, retain) UINavigationController *navigationController;
+- (id) initWithNavigationController:(UINavigationController*)navController;
+
 
 @end

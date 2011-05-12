@@ -27,6 +27,7 @@
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
 @class LinkedList;
+#import "NavLauncher.h"
 
 @interface MapViewController : UIViewController <MKMapViewDelegate> {
 	UIView *parentView;
@@ -39,6 +40,8 @@
 	
 	BOOL isCurrentLocationSet;
 	//MKCoordinateRegion lastUserLocation;
+	
+	NavLauncher *navLauncher;
 }
 
 @property (nonatomic, retain) UIView *parentView;
@@ -46,6 +49,8 @@
 @property (nonatomic, retain) UIScrollView *scrollView;
 
 + (MapViewController*) getInstance;
+
+- (void) setNavLauncher:(NavLauncher *)launcher;
 
 - (NSDictionary*) getImageIdSet;
 - (void) addVisibleImages:(NSArray*)pkImages;

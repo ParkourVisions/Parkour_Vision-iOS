@@ -53,6 +53,13 @@ static NSOperationQueue *queue;
 // from all areas of the map
 - (void) partitionAndSubmitSearch:(SearchRequest*)request {
 	
+	// hack
+	// when the map view loads it kicks of a search request immediately, and then pans to the current location
+	// and creates another search request
+	// this allows us to ignore the first search request
+	if (request.rid == 1)
+		return;
+	
 	// remove off screen annotations and images
 	MapViewController *mapViewController = [MapViewController getInstance];
 	[mapViewController removeImagesOutsideMinCoord:request.minCoord maxCoord:request.maxCoord];

@@ -19,24 +19,51 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  * 
- * SearchWorker.h
+ * UploadTask.h
  * author: emancebo
- * 3/23/11
+ * 5/9/11
  */
 
 #import <Foundation/Foundation.h>
-#import "SearchRequest.h"
-#import "SearchResult.h"
-#import "SearchError.h"
 
-@interface SearchWorker : NSObject {
+#import "UploadInfo.h"
+#import "PostResult.h"
+@class UploadTask;
 
+@protocol UploadTaskDelegate<NSObject>
+@required
+- (void) uploadFinished:(UploadTask*)task;
+- (void) progressUpdated:(UploadTask*)task;
+@end
+
+@interface UploadTask : NSObject {
+
+	UploadInfo *uploadInfo;
+	id<UploadTaskDelegate> delegate;
+	
+	BOOL mDone;
+	float mProgress;
+	NSString *mErrorMessage;
+	
+	int taskId;
 }
 
-// curImages provided to prevent refetching info for images that were
-// already loaded
-- (void) search:(SearchRequest*)request curImages:(NSDictionary*)curImageIds;
-- (void) updateModel:(SearchResult*)result;
-- (void) setError:(SearchError*)error;
+@property (nonatomic, readonly) int taskId;
+@property (nonatomic, retain) UploadInfo *uploadInfo;
+@property (nonatomic, retain) id<UploadTaskDelegate> delegate;
+
+- (NSNumber*) taskIdNumber;
+
+- (id) initWithUploadInfo:(UploadInfo*)info;
+- (void) startInBackground;
+
+- (float) getProgress; // returns number between 0 and 1.0
+- (BOOL) isDone;
+- (NSString*) getError; // returns nil if no error
+
+- (void) notifyDelegateDone:(PostResult*)result;
+- (void) notifyDelegateProgress;
 
 @end
+
+

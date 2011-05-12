@@ -57,7 +57,7 @@
 + (NSString*) signedQueryStringFromArgs:(NSDictionary*)args;
 + (NSString*) apiSigFromArgs:(NSDictionary*)args;
 + (NSString*) calculateMd5:(NSString*)str;
-+ (PostResult*) postToUrl:(NSString*)urlString postData:(NSDictionary*)postData photo:(UIImage*)photo;
++ (PostResult*) postToUrl:(NSString*)urlString postData:(NSDictionary*)postData image:(NSData*)imageData;
 + (void) incrementApiCount;
 
 @end
