@@ -13,8 +13,8 @@
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
 			<integer value="38"/>
-			<integer value="47"/>
 			<integer value="1"/>
+			<integer value="47"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -73,34 +73,10 @@
 							<bytes key="NSWhite">MC41AA</bytes>
 						</object>
 					</object>
-					<object class="IBUIButton" id="818047357">
-						<reference key="NSNextResponder" ref="191373211"/>
-						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{63, 167}, {173, 37}}</string>
-						<reference key="NSSuperview" ref="191373211"/>
-						<bool key="IBUIOpaque">NO</bool>
-						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-						<int key="IBUIContentHorizontalAlignment">0</int>
-						<int key="IBUIContentVerticalAlignment">0</int>
-						<reference key="IBUIFont" ref="333413230"/>
-						<int key="IBUIButtonType">1</int>
-						<string key="IBUINormalTitle">Upload from Camera</string>
-						<reference key="IBUIHighlightedTitleColor" ref="696185095"/>
-						<object class="NSColor" key="IBUIDisabledTitleColor" id="61305521">
-							<int key="NSColorSpace">3</int>
-							<bytes key="NSWhite">MC42NjY2NjY2NjY3AA</bytes>
-						</object>
-						<object class="NSColor" key="IBUINormalTitleColor">
-							<int key="NSColorSpace">1</int>
-							<bytes key="NSRGB">MC4xOTYwNzg0MzQ2IDAuMzA5ODAzOTMyOSAwLjUyMTU2ODY1NgA</bytes>
-						</object>
-						<reference key="IBUIDisabledTitleShadowColor" ref="712347509"/>
-						<reference key="IBUINormalTitleShadowColor" ref="712347509"/>
-					</object>
 					<object class="IBUIButton" id="1003855820">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{110, 300}, {84, 37}}</string>
+						<string key="NSFrame">{{107, 259}, {84, 37}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -116,30 +92,10 @@
 						</object>
 						<reference key="IBUINormalTitleShadowColor" ref="712347509"/>
 					</object>
-					<object class="IBUIButton" id="312733305">
-						<reference key="NSNextResponder" ref="191373211"/>
-						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{65, 227}, {168, 37}}</string>
-						<reference key="NSSuperview" ref="191373211"/>
-						<bool key="IBUIOpaque">NO</bool>
-						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-						<int key="IBUIContentHorizontalAlignment">0</int>
-						<int key="IBUIContentVerticalAlignment">0</int>
-						<reference key="IBUIFont" ref="333413230"/>
-						<int key="IBUIButtonType">1</int>
-						<string key="IBUINormalTitle">Upload from Library</string>
-						<reference key="IBUIHighlightedTitleColor" ref="696185095"/>
-						<reference key="IBUIDisabledTitleColor" ref="61305521"/>
-						<object class="NSColor" key="IBUINormalTitleColor">
-							<int key="NSColorSpace">1</int>
-							<bytes key="NSRGB">MC4xOTYwNzg0MzQ2IDAuMzA5ODAzOTMyOSAwLjUyMTU2ODY1NgA</bytes>
-						</object>
-						<reference key="IBUINormalTitleShadowColor" ref="712347509"/>
-					</object>
 					<object class="IBUIButton" id="101764516">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{97, 369}, {104, 37}}</string>
+						<string key="NSFrame">{{97, 175}, {104, 37}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -252,78 +208,12 @@
 					<int key="connectionID">9</int>
 				</object>
 				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchEventConnection" key="connection">
-						<string key="label">uploadFromCamera:</string>
-						<reference key="source" ref="818047357"/>
-						<reference key="destination" ref="372490531"/>
-						<int key="IBEventType">7</int>
-					</object>
-					<int key="connectionID">13</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchEventConnection" key="connection">
-						<string key="label">uploadFromLibrary:</string>
-						<reference key="source" ref="312733305"/>
-						<reference key="destination" ref="372490531"/>
-						<int key="IBEventType">7</int>
-					</object>
-					<int key="connectionID">14</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">uploadNavController</string>
-						<reference key="source" ref="372490531"/>
-						<reference key="destination" ref="539755064"/>
-					</object>
-					<int key="connectionID">41</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">tabBarController</string>
-						<reference key="source" ref="372490531"/>
-						<reference key="destination" ref="152993073"/>
-					</object>
-					<int key="connectionID">44</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchEventConnection" key="connection">
-						<string key="label">cancelUploadPhoto:</string>
-						<reference key="source" ref="152312673"/>
-						<reference key="destination" ref="372490531"/>
-					</object>
-					<int key="connectionID">45</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchEventConnection" key="connection">
-						<string key="label">submitUpload:</string>
-						<reference key="source" ref="819594566"/>
-						<reference key="destination" ref="372490531"/>
-					</object>
-					<int key="connectionID">46</int>
-				</object>
-				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">accountVC</string>
 						<reference key="source" ref="372490531"/>
 						<reference key="destination" ref="85664066"/>
 					</object>
 					<int key="connectionID">48</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">uploadFromCameraButton</string>
-						<reference key="source" ref="372490531"/>
-						<reference key="destination" ref="818047357"/>
-					</object>
-					<int key="connectionID">49</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">uploadFromLibraryButton</string>
-						<reference key="source" ref="372490531"/>
-						<reference key="destination" ref="312733305"/>
-					</object>
-					<int key="connectionID">52</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
@@ -358,10 +248,8 @@
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<reference ref="76519145"/>
-							<reference ref="818047357"/>
-							<reference ref="1003855820"/>
-							<reference ref="312733305"/>
 							<reference ref="101764516"/>
+							<reference ref="1003855820"/>
 						</object>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -382,18 +270,8 @@
 						<reference key="parent" ref="191373211"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">5</int>
-						<reference key="object" ref="818047357"/>
-						<reference key="parent" ref="191373211"/>
-					</object>
-					<object class="IBObjectRecord">
 						<int key="objectID">6</int>
 						<reference key="object" ref="1003855820"/>
-						<reference key="parent" ref="191373211"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">12</int>
-						<reference key="object" ref="312733305"/>
 						<reference key="parent" ref="191373211"/>
 					</object>
 					<object class="IBObjectRecord">
@@ -460,7 +338,6 @@
 					<string>-2.CustomClassName</string>
 					<string>1.IBEditorWindowLastContentRect</string>
 					<string>1.IBPluginDependency</string>
-					<string>12.IBPluginDependency</string>
 					<string>33.IBEditorWindowLastContentRect</string>
 					<string>33.IBPluginDependency</string>
 					<string>34.CustomClassName</string>
@@ -473,8 +350,6 @@
 					<string>47.CustomClassName</string>
 					<string>47.IBEditorWindowLastContentRect</string>
 					<string>47.IBPluginDependency</string>
-					<string>5.IBPluginDependency</string>
-					<string>5.IBViewBoundsToFrameTransform</string>
 					<string>53.IBPluginDependency</string>
 					<string>53.IBViewBoundsToFrameTransform</string>
 					<string>6.IBPluginDependency</string>
@@ -484,8 +359,7 @@
 					<bool key="EncodedWithXMLCoder">YES</bool>
 					<string>MainNavController</string>
 					<string>UIResponder</string>
-					<string>{{572, 165}, {320, 480}}</string>
-					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+					<string>{{-804, 257}, {320, 480}}</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>{{449, 133}, {320, 480}}</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -501,15 +375,11 @@
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<object class="NSAffineTransform">
-						<bytes key="NSTransformStruct">P4AAAL+AAABC4AAAw10AAA</bytes>
+						<bytes key="NSTransformStruct">P4AAAL+AAABCwgAAw8oAAA</bytes>
 					</object>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<object class="NSAffineTransform">
-						<bytes key="NSTransformStruct">P4AAAL+AAABC1gAAw8oAAA</bytes>
-					</object>
-					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-					<object class="NSAffineTransform">
-						<bytes key="NSTransformStruct">P4AAAL+AAABC1gAAw40AAA</bytes>
+						<bytes key="NSTransformStruct">P4AAAL+AAABC3AAAw6eAAA</bytes>
 					</object>
 				</object>
 			</object>
@@ -573,18 +443,10 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>account:</string>
 							<string>browse:</string>
-							<string>cancelUploadPhoto:</string>
-							<string>submitUpload:</string>
-							<string>uploadFromCamera:</string>
-							<string>uploadFromLibrary:</string>
 							<string>viewUploads:</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
 							<string>id</string>
 							<string>id</string>
 							<string>id</string>
@@ -596,10 +458,6 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>account:</string>
 							<string>browse:</string>
-							<string>cancelUploadPhoto:</string>
-							<string>submitUpload:</string>
-							<string>uploadFromCamera:</string>
-							<string>uploadFromLibrary:</string>
 							<string>viewUploads:</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
@@ -610,22 +468,6 @@
 							</object>
 							<object class="IBActionInfo">
 								<string key="name">browse:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">cancelUploadPhoto:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">submitUpload:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">uploadFromCamera:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">uploadFromLibrary:</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
@@ -640,20 +482,12 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>accountVC</string>
 							<string>mainView</string>
-							<string>tabBarController</string>
-							<string>uploadFromCameraButton</string>
-							<string>uploadFromLibraryButton</string>
-							<string>uploadNavController</string>
 							<string>uploadsButton</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>AccountViewController</string>
 							<string>UIView</string>
-							<string>UITabBarController</string>
-							<string>UIButton</string>
-							<string>UIButton</string>
-							<string>UINavigationController</string>
 							<string>UIButton</string>
 						</object>
 					</object>
@@ -663,10 +497,6 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>accountVC</string>
 							<string>mainView</string>
-							<string>tabBarController</string>
-							<string>uploadFromCameraButton</string>
-							<string>uploadFromLibraryButton</string>
-							<string>uploadNavController</string>
 							<string>uploadsButton</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
@@ -678,22 +508,6 @@
 							<object class="IBToOneOutletInfo">
 								<string key="name">mainView</string>
 								<string key="candidateClassName">UIView</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">tabBarController</string>
-								<string key="candidateClassName">UITabBarController</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">uploadFromCameraButton</string>
-								<string key="candidateClassName">UIButton</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">uploadFromLibraryButton</string>
-								<string key="candidateClassName">UIButton</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">uploadNavController</string>
-								<string key="candidateClassName">UINavigationController</string>
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">uploadsButton</string>

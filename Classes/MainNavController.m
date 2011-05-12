@@ -25,12 +25,7 @@
  */
 
 #import "MainNavController.h"
-#import "EditLocationViewController.h"
-#import "EditInfoViewController.h"
-#import "EditTagsViewController.h"
-#import "UploadProgressController.h"
 #import "AccountViewController.h"
-#import "UploadInfo.h"
 #import "MapViewController.h"
 #import "UploadStatusController.h"
 #import <ImageIO/CGImageProperties.h>
@@ -40,7 +35,7 @@
 
 @implementation MainNavController
 
-@synthesize mainView, editLocationVC, editInfoVC, editTagsVC, tabBarController, uploadNavController, accountVC, uploadInfo, uploadFromCameraButton, mapViewController, uploadFromLibraryButton, uploadsButton, uploadStatusController;
+@synthesize mainView, accountVC, mapViewController, uploadsButton, uploadStatusController;
 
 
 // The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
@@ -59,36 +54,6 @@
     [super viewDidLoad];
 	mapViewController = [MapViewController getInstance];
 	uploadStatusController = [[UploadStatusController alloc] init];
-}
-
-- (void) configureUploadController {
-	editLocationVC = [[EditLocationViewController alloc] init];
-	editInfoVC = [[EditInfoViewController alloc] init];
-	editTagsVC = [[EditTagsViewController alloc] init];
-	
-	// create tab bar items
-	UITabBarItem *tabItem = [[UITabBarItem alloc] initWithTitle:@"Set Location" image:nil tag:0];
-	editLocationVC.tabBarItem = tabItem;
-	[tabItem release];
-	
-	tabItem = [[UITabBarItem alloc] initWithTitle:@"Set Title" image:nil tag:1];
-	editInfoVC.tabBarItem = tabItem;
-	[tabItem release];
-	
-	tabItem = [[UITabBarItem alloc] initWithTitle:@"Set Tags" image:nil tag:2];
-	editTagsVC.tabBarItem = tabItem;
-	[tabItem release];
-	
-	NSMutableArray *controllers = [[NSMutableArray alloc] init];
-	[controllers addObject:editLocationVC];
-	[controllers addObject:editInfoVC];
-	[controllers addObject:editTagsVC];
-	[tabBarController setViewControllers:controllers];
-	[controllers release];
-	
-	[editLocationVC release];
-	[editInfoVC release];
-	[editTagsVC release];
 }
 
 // Override to allow orientations other than the default portrait orientation.
@@ -111,145 +76,18 @@
 	[self.navigationController pushViewController:uploadStatusController animated:YES];
 }
 
-- (IBAction) uploadFromCamera:(id)sender {
-	UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
-	imagePicker.delegate = self;
-	imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
-	[self presentModalViewController:imagePicker animated:YES];
-	[imagePicker release];
-}
-
-- (IBAction) uploadFromLibrary:(id)sender {
-	UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
-	imagePicker.delegate = self;
-	//imagePicker.allowsEditing = YES;
-	//imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
-	[self presentModalViewController:imagePicker animated:YES];
-	[imagePicker release];
-}
-
-- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
-	
-	[self configureUploadController];
-	tabBarController.selectedViewController = [tabBarController.viewControllers objectAtIndex:0];
-	
-	self.uploadInfo = [[[UploadInfo alloc] init] autorelease];
-	
-	//UIImage *img = [info objectForKey:UIImagePickerControllerEditedImage];
-	//if (img == nil) {
-	//	img = [info objectForKey:UIImagePickerControllerOriginalImage];
-	//}
-	UIImage *img = [info objectForKey:UIImagePickerControllerOriginalImage];
-	
-	NSData *imageData = UIImageJPEGRepresentation(img, 1.0);
-	uploadInfo.imageData = imageData;
-	uploadInfo.image = img;
-	
-	NSDictionary *metaData = [info objectForKey:UIImagePickerControllerMediaMetadata];
-	if (metaData != nil) {
-		NSDictionary *exifData = [metaData objectForKey:(NSString*)kCGImagePropertyExifDictionary];
-		if (exifData != nil) {
-			uploadInfo.exifData = exifData;
-			NSLog(@"exifData: %@", [exifData description]);
-			
-			CGImageSourceRef source = CGImageSourceCreateWithData((CFDataRef)imageData, nil);
-			
-			CFStringRef UTI = CGImageSourceGetType(source);
-			
-			NSMutableData *dataOut = [NSMutableData data];
-			
-			CGImageDestinationRef destination = CGImageDestinationCreateWithData((CFMutableDataRef)dataOut,UTI,1,NULL);
-		
-			if (destination) {
-				CGImageDestinationAddImageFromSource(destination,source,0, (CFDictionaryRef) metaData);
-				if (CGImageDestinationFinalize(destination)) {
-					NSLog(@"Using image with exif data added");
-					uploadInfo.imageData = dataOut;
-					uploadInfo.image = [UIImage imageWithData:dataOut];
-					CFRelease(destination);
-				}
-				else {
-					NSLog(@"Could not finalize destination image with exifData");
-				}
-			}
-			else {
-				NSLog(@"Could not create CGImageDestinationRef");
-			}
-			
-			CFRelease(source);
-		}
-	}
-	/*
-	else {
-		// attempt to get meta data from image directly
-		NSLog(@"attempt to get meta data from image directly");
-		CGImageSourceRef source = CGImageSourceCreateWithData((CFDataRef)imageData, nil);
-		NSDictionary *metaData = (NSDictionary *) CGImageSourceCopyPropertiesAtIndex(source,0,NULL);
-		if (metaData != nil) {
-			NSDictionary *exifData = [metaData objectForKey:(NSString*)kCGImagePropertyExifDictionary];
-			if (exifData != nil) {
-				uploadInfo.exifData = exifData;
-				NSLog(@"exifData: %@", [exifData description]);
-			}
-		}
-	}
-	 */
-	
-	[self dismissModalViewControllerAnimated:NO];
-	//UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:tabBarController];
-	//[self.navigationController pushViewController:navController animated:NO];
-	[self presentModalViewController:uploadNavController animated:NO];
-	//[navController release];
-}
-
-- (IBAction) cancelUploadPhoto:(id)sender {
-	[self dismissModalViewControllerAnimated:YES];
-}
-
-- (IBAction) submitUpload:(id)sender {
-
-	UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Confirm upload" message:@"Upload this photo to Flickr?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Upload",nil];
-	[alertView show];
-	[alertView release];
-}
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-	if (buttonIndex == 1) {
-		[self dismissModalViewControllerAnimated:NO];
-		
-		[self populateUploadInfo];
-		UploadProgressController *progressController = [[UploadProgressController alloc] initWithUploadInfo:uploadInfo];
-		
-		[self.navigationController pushViewController:progressController animated:NO];
-		[progressController uploadAsync];
-		[progressController release];
-	}
-}
-
-- (void) populateUploadInfo {
-	uploadInfo.title = [editInfoVC getTitle];
-	uploadInfo.desc = [editInfoVC getDesc];
-	uploadInfo.tags = [editTagsVC getTags];
-	uploadInfo.coord = [editLocationVC getCoord];
-}
 
 - (void) viewWillAppear:(BOOL)animated {
-	
+	/*
 	// disable both upload buttons if user is not logged in
 	NSString *authToken = [[NSUserDefaults standardUserDefaults] stringForKey:@"auth_token"];
 	if (authToken == nil) {
-		uploadFromCameraButton.enabled = NO;
-		uploadFromLibraryButton.enabled = NO;
+		uploadsButton.enabled = NO;
 	}
 	else {
-		uploadFromCameraButton.enabled = YES;
-		uploadFromLibraryButton.enabled = YES;
+		uploadsButton.enabled = YES;
 	}
-	
-	// disable upload from camera button if device has no camera
-	if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
-		uploadFromCameraButton.enabled = NO;
-	}
+	 */
 }
 
 - (void)didReceiveMemoryWarning {
@@ -263,7 +101,6 @@
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
-	self.tabBarController = nil;
 	self.uploadStatusController = nil;
 }
 

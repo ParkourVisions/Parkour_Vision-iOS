@@ -19,36 +19,39 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  * 
- * MainNavController.h
+ * NavLauncher.m
  * author: emancebo
- * 4/5/11
+ * 5/11/11
  */
 
-#import <UIKit/UIKit.h>
+#import "NavLauncher.h"
 
-@class AccountViewController;
-@class MapViewController;
-@class UploadStatusController;
 
-@interface MainNavController : UIViewController <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIAlertViewDelegate> {
-	UIView *mainView;
-	
-	AccountViewController *accountVC;
-	UIButton *uploadsButton;
-	MapViewController *mapViewController;
-	UploadStatusController *uploadStatusController;
+@implementation NavLauncher
+
+@synthesize navigationController;
+
+- (id) initWithNavigationController:(UINavigationController*)navController {
+	if (self = [super init]) {
+		accountViewController = [[AccountViewController alloc] init];
+		uploadStatusController = [[UploadStatusController alloc] init];
+		self.navigationController = navController;
+	}
+	return self;
 }
 
-@property (nonatomic, retain) IBOutlet UIView *mainView;
+- (void) onUploadButton:(id)sender {
+	[navigationController pushViewController:uploadStatusController animated:YES];
+}
 
-@property (nonatomic, retain) IBOutlet UIButton *uploadsButton;
-@property (nonatomic, retain) IBOutlet AccountViewController *accountVC;
+- (void) onAccountButton:(id)sender {
+	[navigationController pushViewController:accountViewController animated:YES];
+}
 
-@property (nonatomic, retain) MapViewController *mapViewController;
-@property (nonatomic, retain) UploadStatusController *uploadStatusController;
-
-- (IBAction) viewUploads:(id)sender;
-- (IBAction) browse:(id)sender;
-- (IBAction) account:(id)sender;
+- (void) dealloc {
+	[accountViewController release];
+	[uploadStatusController release];
+	[super dealloc];
+}
 
 @end

@@ -19,36 +19,19 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  * 
- * MainNavController.h
+ * AuthInterceptor.h
  * author: emancebo
- * 4/5/11
+ * 5/11/11
  */
 
-#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
 
-@class AccountViewController;
-@class MapViewController;
-@class UploadStatusController;
 
-@interface MainNavController : UIViewController <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIAlertViewDelegate> {
-	UIView *mainView;
-	
-	AccountViewController *accountVC;
-	UIButton *uploadsButton;
-	MapViewController *mapViewController;
-	UploadStatusController *uploadStatusController;
+@interface AuthInterceptor : NSObject <UIAlertViewDelegate> {
+
 }
 
-@property (nonatomic, retain) IBOutlet UIView *mainView;
-
-@property (nonatomic, retain) IBOutlet UIButton *uploadsButton;
-@property (nonatomic, retain) IBOutlet AccountViewController *accountVC;
-
-@property (nonatomic, retain) MapViewController *mapViewController;
-@property (nonatomic, retain) UploadStatusController *uploadStatusController;
-
-- (IBAction) viewUploads:(id)sender;
-- (IBAction) browse:(id)sender;
-- (IBAction) account:(id)sender;
+- (void) showAuthAlertDialog;
+- (BOOL) showAuthAlertDialogIfNecessary;
 
 @end

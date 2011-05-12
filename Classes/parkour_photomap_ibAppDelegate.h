@@ -29,6 +29,7 @@
 @interface parkour_photomap_ibAppDelegate : NSObject <UIApplicationDelegate> {
     UIWindow *window;
 	UINavigationController *navController;
+	UINavigationController *navController2;
 }
 
 @property (nonatomic, retain) IBOutlet UIWindow *window;

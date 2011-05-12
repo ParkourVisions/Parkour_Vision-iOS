@@ -238,6 +238,8 @@ static NSCache *infoCache;
 	
 	ASIFormDataRequest *request = 
 		[[ASIFormDataRequest alloc] initWithURL:[NSURL URLWithString:urlString]];
+	request.numberOfTimesToRetryOnTimeout = 2;
+	
 	[request addPostValue:sig forKey:@"api_sig"];
 	for (NSString *key in myDict) {
 		NSString *val = [myDict objectForKey:key];
@@ -260,6 +262,10 @@ static NSCache *infoCache;
 		result.rawResponse = [request responseString];
 		[result populateFromXmlResponse:result.rawResponse];
 		NSLog(@"response string: %@", result.rawResponse);
+	}
+	else if (request.responseStatusCode == 0) { // timeout?
+		result.isOK = NO;
+		result.errorMessage = @"Connection timed out";
 	}
 	else {
 		result.isOK = NO;

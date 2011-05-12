@@ -111,10 +111,42 @@ static MapViewController *singleton;
 		mapView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 		[parentView addSubview:mapView];
 		
+		/*
+		// setup buttons for upload and account views
+		UIBarButtonItem *uploadButton = 
+			[[UIBarButtonItem alloc] initWithTitle:@"Uploads" style:UIBarButtonItemStyleDone target:navLauncher action:@selector(onUploadButton:)];
+        self.navigationItem.rightBarButtonItem = uploadButton;
+		[uploadButton release];
+		
+		UIBarButtonItem *accountButton = 
+			[[UIBarButtonItem alloc] initWithTitle:@"Account" style:UIBarButtonItemStyleDone target:navLauncher action:@selector(onAccountButton:)];
+		self.navigationItem.leftBarButtonItem = accountButton;
+		[accountButton release];
+
+		self.navigationItem.title = @"Browse";
+		 */
+		
 		[self setView:parentView];
 
 	}
 	return self;
+}
+
+- (void) setNavLauncher:(NavLauncher *)launcher {
+	navLauncher = launcher;
+	[navLauncher retain];
+	
+	UIBarButtonItem *uploadButton = 
+	[[UIBarButtonItem alloc] initWithTitle:@"Uploads" style:UIBarButtonItemStylePlain target:navLauncher action:@selector(onUploadButton:)];
+	self.navigationItem.rightBarButtonItem = uploadButton;
+	[uploadButton release];
+	
+	UIBarButtonItem *accountButton = 
+	[[UIBarButtonItem alloc] initWithTitle:@"Account" style:UIBarButtonItemStylePlain target:navLauncher action:@selector(onAccountButton:)];
+	self.navigationItem.leftBarButtonItem = accountButton;
+	[accountButton release];
+	
+	self.navigationItem.title = @"Browse";
 }
 
 
@@ -132,8 +164,8 @@ static MapViewController *singleton;
 	double dx = span.longitudeDelta / 2.0;
 	
 	// shift origin
-	double reservedDelta = 0.15 * span.longitudeDelta;
-	center.longitude = center.longitude - reservedDelta;
+	//double reservedDelta = 0.15 * span.longitudeDelta;
+	//center.longitude = center.longitude - reservedDelta;
 	
 	CLLocationCoordinate2D minCoord;
 	CLLocationCoordinate2D maxCoord;
@@ -156,7 +188,7 @@ static MapViewController *singleton;
 
 - (NSDictionary*) getImageIdSet {
 	NSMutableDictionary *imageIdSet = [[NSMutableDictionary alloc] init];
-	NSLog(@"init imageIdSet %p", imageIdSet);
+	// NSLog(@"init imageIdSet %p", imageIdSet);
 	
 	for (LinkedListNode *node = [visibleImages getHead]; node != NULL; node = [node next]) {
 		PKImage *image = [node data];
@@ -212,7 +244,7 @@ static MapViewController *singleton;
 // * add thumbnail to scroll view
 - (void) addVisibleImages:(NSArray*)pkImages {
 	
-	NSLog(@"called addVisibleImages");
+	//NSLog(@"called addVisibleImages");
 	
 	int curSize = [visibleImages count];
 	CGSize contentSize = {THUMB_SIZE,THUMB_SIZE*(curSize + [pkImages count])};
@@ -469,6 +501,7 @@ static MapViewController *singleton;
 - (void)dealloc {
 	[annotations release];
 	[visibleImages release];
+	[navLauncher release];
 	[super dealloc];
 }
 

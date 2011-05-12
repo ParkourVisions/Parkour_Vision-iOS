@@ -19,33 +19,28 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  * 
- * UploadProgressController.h
+ * NavLauncher.h
  * author: emancebo
- * 4/6/11
+ * 5/11/11
  */
 
-#import <UIKit/UIKit.h>
-@class UploadInfo;
-@class PostResult;
+#import <Foundation/Foundation.h>
 
-@interface UploadProgressController : UIViewController {
-	UploadInfo *uploadInfo;
+#import "AccountViewController.h"
+#import "UploadStatusController.h"
+
+@interface NavLauncher : NSObject {
+	AccountViewController *accountViewController;
+	UploadStatusController *uploadStatusController;
 	
-	UILabel *imageTitle;
-	UIImageView *imageView;
-	UILabel *status;
-	UIActivityIndicatorView *activityView;
-	UITextView *errorView;
+	UINavigationController *navigationController;
 }
 
-- (id) initWithUploadInfo:(UploadInfo*)uinfo;
-- (void) uploadAsync;
-- (void) setResult:(PostResult*)result;
+- (void) onUploadButton:(id)sender;
+- (void) onAccountButton:(id)sender;
 
-@property (nonatomic, retain) IBOutlet UILabel *imageTitle;
-@property (nonatomic, retain) IBOutlet UIImageView *imageView;
-@property (nonatomic, retain) IBOutlet UILabel *status;
-@property (nonatomic, retain) IBOutlet UIActivityIndicatorView *activityView;
-@property (nonatomic, retain) IBOutlet UITextView *errorView;
+@property (nonatomic, retain) UINavigationController *navigationController;
+- (id) initWithNavigationController:(UINavigationController*)navController;
+
 
 @end

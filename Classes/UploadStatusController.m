@@ -40,28 +40,35 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
 		UIBarButtonItem *newUploadButton = 
-			[[UIBarButtonItem alloc] initWithTitle:@"New Upload" style:UIBarButtonItemStyleDone target:self action:@selector(onNewUpload:)];
+			[[UIBarButtonItem alloc] initWithTitle:@"New Upload" style:UIBarButtonItemStylePlain target:self action:@selector(onNewUpload:)];
         self.navigationItem.rightBarButtonItem = newUploadButton;
 		[newUploadButton release];
 		
+		self.navigationItem.title = @"Uploads";
+		
 		uploadQueue = [[NSMutableArray alloc] init];
 		uploadTaskToProgressView = [[NSMutableDictionary alloc] init];
+		authInterceptor  = [[AuthInterceptor alloc] init];
     }
     return self;
 }
 
 - (void) onNewUpload:(id)sender {	
 	
-	// if camera is not available, don't bother giving the using a choice
-	if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
-		[self alertView:nil clickedButtonAtIndex:2];
-		return;
-	}
+	// force login if necessary
+	if (![authInterceptor showAuthAlertDialogIfNecessary]) {
 	
-	UIAlertView *alertView = 
-		[[UIAlertView alloc] initWithTitle:@"Choose source" message:@"How would you like to upload a photo?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Camera",@"Library", nil];
-	[alertView show];
-	[alertView release];
+		// if camera is not available, don't bother giving the using a choice
+		if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+			[self alertView:nil clickedButtonAtIndex:2];
+			return;
+		}
+	
+		UIAlertView *alertView = 
+			[[UIAlertView alloc] initWithTitle:@"Choose source" message:@"How would you like to upload a photo?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Camera",@"Library", nil];
+		[alertView show];
+		[alertView release];
+	}
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
@@ -71,6 +78,12 @@
 	
 	UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
 	imagePicker.delegate = self;
+	//imagePicker.navigationBar.barStyle = UIBarStyleDefault;
+	//imagePicker.navigationBar.translucent = NO;
+	//imagePicker.navigationBarHidden = YES;
+	// TODO: not sure how to force the image picker nav bar to be like the rest
+	NSLog(@"Picker bar style %d", imagePicker.navigationBar.barStyle);
+	NSLog(@"is translucent = %d", imagePicker.navigationBar.translucent);
 	
 	if (buttonIndex == 1) { // camera type
 		imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
@@ -202,6 +215,7 @@
 	
 	UILabel *label;
     label = (UILabel *)[cell viewWithTag:2];
+	label.textColor = [UIColor blackColor];
 	
 	if ([task isDone]) {
 		NSString *error = [task getError];
@@ -210,6 +224,7 @@
 		}
 		else {
 			label.text = error;
+			label.textColor = [UIColor redColor];
 		}
 	}
 	else {
@@ -220,6 +235,7 @@
 	UIProgressView *progressView;
 	progressView = (UIProgressView*)[cell viewWithTag:3];
 	[uploadTaskToProgressView setObject:progressView forKey:[task taskIdNumber]];
+	progressView.progress = [task getProgress];
 		
 	return cell;
 }
@@ -244,6 +260,10 @@
 	UIProgressView *progressView = [uploadTaskToProgressView objectForKey:[task taskIdNumber]];
 	if (progressView != nil) {
 		progressView.progress = [task getProgress];
+		NSLog(@"Setting progress for task %d to %f", [[task taskIdNumber] intValue], [task getProgress]);
+	}
+	else {
+		NSLog(@"No progress view for task %d", [[task taskIdNumber] intValue]);
 	}
 }
 
@@ -281,6 +301,7 @@
 	[uploadInfo release];
 	[uploadQueue release];
 	[uploadTaskToProgressView release];
+	[authInterceptor release];
     [super dealloc];
 }
 

@@ -29,7 +29,7 @@
 
 @implementation AccountViewController
 
-@synthesize username;
+@synthesize username, authInterceptor;
 
 // The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
 /*
@@ -42,12 +42,12 @@
 }
 */
 
-/*
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
     [super viewDidLoad];
+	authInterceptor = [[AuthInterceptor alloc] init];
+	self.navigationItem.title = @"Account";
 }
-*/
 
 /*
 // Override to allow orientations other than the default portrait orientation.
@@ -68,6 +68,7 @@
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
+	self.authInterceptor = nil;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -83,24 +84,7 @@
 }
 
 - (IBAction) setUserPressed:(id)sender {
-	UIAlertView *confirmAuth = [[UIAlertView alloc] initWithTitle:@"Confirm" 
-		message:@"A browser window will be presented for you to login to your Flickr account and authorize this app" 
-														 delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"OK",nil];
-	[confirmAuth show];
-	[confirmAuth release];
-}
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-	if (buttonIndex == 1) {
-		NSString *API_KEY = @"2099cafa3dc4df6fec7bb0e5d7aec256";
-        
-        NSString *urlString = 
-		[NSString stringWithFormat:@"http://flickr.com/services/auth/fresh?api_key=%@&perms=write&api_sig=%@",
-		 API_KEY, @"7575cf78a09e9ae84b5966eda7388ec9"];
-        
-        NSURL *loginURL = [NSURL URLWithString:urlString];
-        [[UIApplication sharedApplication] openURL:loginURL];
-	}
+	[authInterceptor showAuthAlertDialog];
 }
 
 - (void)dealloc {

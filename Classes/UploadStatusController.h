@@ -31,6 +31,7 @@
 #import "EditTagsViewController.h"
 #import "UploadInfo.h"
 #import "UploadTask.h"
+#import "AuthInterceptor.h"
 
 @interface UploadStatusController : UIViewController <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIAlertViewDelegate, UITableViewDataSource, UploadTaskDelegate> {
 
@@ -46,6 +47,8 @@
 	
 	NSMutableArray *uploadQueue;
 	NSMutableDictionary *uploadTaskToProgressView;
+	
+	AuthInterceptor *authInterceptor;
 }
 
 @property (nonatomic, retain) IBOutlet UITableView *tableView;

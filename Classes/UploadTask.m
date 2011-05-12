@@ -40,7 +40,7 @@
 		mDone = NO;
 		mProgress = 0.1;
 		
-		static int rid = 0;
+		static volatile int rid = 0;
 		taskId = OSAtomicIncrement32(&rid);
 	}
 	return self;
