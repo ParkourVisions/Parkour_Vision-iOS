@@ -26,6 +26,8 @@
 
 #import "parkour_photomap_ibAppDelegate.h"
 #import "FlickrAPI.h"
+#import "MapViewController.h"
+#import "NavLauncher.h"
 
 @implementation parkour_photomap_ibAppDelegate
 
@@ -38,7 +40,15 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {    
     
     // Override point for customization after application launch.
-    [self.window addSubview:navController.view];
+	MapViewController *mapViewController = [MapViewController getInstance];
+	navController2 = [[UINavigationController alloc] initWithRootViewController:mapViewController];
+	navController2.navigationBar.barStyle = UIBarStyleBlack;
+	
+	NavLauncher *launcher = [[NavLauncher alloc] initWithNavigationController:navController2];
+	//mapViewController.navLauncher = launcher;
+	[mapViewController setNavLauncher:launcher];
+	
+    [self.window addSubview:navController2.view];
     [self.window makeKeyAndVisible];
     
 	[[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];

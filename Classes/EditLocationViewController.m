@@ -105,6 +105,12 @@
 - (CLLocationCoordinate2D) getCoord {
 	
 	CLLocationCoordinate2D coord;
+	
+	// could happen if internet is offline and map doesn't load
+	if ([mapView.annotations count] == 0) {
+		return coord;
+	}
+	
 	PKAnnotation *ann = [mapView.annotations objectAtIndex:0];
 	if (ann != nil) {
 		coord = ann.coordinate;

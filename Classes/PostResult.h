@@ -29,6 +29,7 @@
 // result from posting to flickr api
 @interface PostResult : NSObject <NSXMLParserDelegate> {
 	BOOL isOK;
+	int statusCode;
 	NSString *errorMessage;
 	NSString *rawResponse;
 	NSString *photoId;
@@ -38,6 +39,7 @@
 }
 
 @property (nonatomic, assign) BOOL isOK;
+@property (nonatomic, assign) int statusCode;
 @property (nonatomic, retain) NSString *errorMessage;
 @property (nonatomic, retain) NSString *rawResponse;
 @property (nonatomic, retain) NSString *photoId;

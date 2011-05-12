@@ -25,14 +25,16 @@
  */
 
 #import <UIKit/UIKit.h>
+#import "AuthInterceptor.h"
 
-
-@interface AccountViewController : UIViewController <UIAlertViewDelegate> {
+@interface AccountViewController : UIViewController {
 	UILabel *username;
+	AuthInterceptor *authInterceptor;
 }
 
 - (IBAction) setUserPressed:(id)sender;
 
 @property (nonatomic, retain) IBOutlet UILabel *username;
+@property (nonatomic, retain) AuthInterceptor *authInterceptor;
 
 @end

@@ -19,24 +19,20 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  * 
- * SearchWorker.h
+ * SearchError.m
  * author: emancebo
- * 3/23/11
+ * 5/6/11
  */
 
 #import <Foundation/Foundation.h>
-#import "SearchRequest.h"
-#import "SearchResult.h"
-#import "SearchError.h"
 
-@interface SearchWorker : NSObject {
 
+@interface SearchError : NSObject {
+	int requestId;
+	NSError *error;
 }
 
-// curImages provided to prevent refetching info for images that were
-// already loaded
-- (void) search:(SearchRequest*)request curImages:(NSDictionary*)curImageIds;
-- (void) updateModel:(SearchResult*)result;
-- (void) setError:(SearchError*)error;
+@property (nonatomic, assign) int requestId;
+@property (nonatomic, retain) NSError *error;
 
 @end

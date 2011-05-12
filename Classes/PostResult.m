@@ -29,7 +29,7 @@
 
 @implementation PostResult
 
-@synthesize isOK, errorMessage, rawResponse, photoId;
+@synthesize isOK, errorMessage, rawResponse, photoId, statusCode;
 
 - (id) init {
 	self = [super init];
@@ -69,7 +69,7 @@
 }
 
 - (NSString*) description {
-	return [NSString stringWithFormat:@"stat:%d err:%@ photoId:%@", isOK, errorMessage, photoId];
+	return [NSString stringWithFormat:@"stat:%d err:%@ photoId:%@ statusCode:%d", isOK, errorMessage, photoId, statusCode];
 }
 
 

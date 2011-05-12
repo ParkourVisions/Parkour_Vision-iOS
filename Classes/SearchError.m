@@ -19,33 +19,21 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  * 
- * UploadProgressController.h
+ * SearchError.m
  * author: emancebo
- * 4/6/11
+ * 5/6/11
  */
 
-#import <UIKit/UIKit.h>
-@class UploadInfo;
-@class PostResult;
+#import "SearchError.h"
 
-@interface UploadProgressController : UIViewController {
-	UploadInfo *uploadInfo;
-	
-	UILabel *imageTitle;
-	UIImageView *imageView;
-	UILabel *status;
-	UIActivityIndicatorView *activityView;
-	UITextView *errorView;
+
+@implementation SearchError
+
+@synthesize requestId, error;
+
+- (void) dealloc {
+	[error release];
+	[super dealloc];
 }
-
-- (id) initWithUploadInfo:(UploadInfo*)uinfo;
-- (void) uploadAsync;
-- (void) setResult:(PostResult*)result;
-
-@property (nonatomic, retain) IBOutlet UILabel *imageTitle;
-@property (nonatomic, retain) IBOutlet UIImageView *imageView;
-@property (nonatomic, retain) IBOutlet UILabel *status;
-@property (nonatomic, retain) IBOutlet UIActivityIndicatorView *activityView;
-@property (nonatomic, retain) IBOutlet UITextView *errorView;
 
 @end
