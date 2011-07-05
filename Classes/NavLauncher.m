@@ -33,7 +33,7 @@
 
 - (id) initWithNavigationController:(UINavigationController*)navController {
 	if (self = [super init]) {
-		accountViewController = [[AccountViewController alloc] init];
+		accountViewController = [AccountViewController getInstance];
 		uploadStatusController = [[UploadStatusController alloc] init];
 		self.navigationController = navController;
 	}

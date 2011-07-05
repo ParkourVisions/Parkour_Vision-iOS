@@ -19,41 +19,23 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  * 
- * MainNavController.h
+ * TextAnnotation.h
  * author: emancebo
- * 4/5/11
+ * 7/4/11
  */
 
-#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
+#import <MapKit/MapKit.h>
 
-@class AccountViewController;
-@class MapViewController;
-@class UploadStatusController;
-@class AboutViewController;
-
-@interface MainNavController : UIViewController <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIAlertViewDelegate> {
-	UIView *mainView;
-	
-	AccountViewController *accountVC;
-	AboutViewController *aboutVC;
-	UIButton *uploadsButton;
-	MapViewController *mapViewController;
-	UploadStatusController *uploadStatusController;
+@interface TextAnnotation : NSObject <MKAnnotation> {
+	NSString *mTitle;
 }
 
-@property (nonatomic, retain) IBOutlet UIView *mainView;
+- (id) initWithTitle:(NSString*)title;
 
-@property (nonatomic, retain) IBOutlet UIButton *uploadsButton;
-@property (nonatomic, retain) AccountViewController *accountVC;
+- (NSString*) title;
+- (NSString*) subtitle;
 
-@property (nonatomic, retain) MapViewController *mapViewController;
-@property (nonatomic, retain) UploadStatusController *uploadStatusController;
-@property (nonatomic, retain) AboutViewController *aboutVC;
-
-- (IBAction) viewUploads:(id)sender;
-- (IBAction) browse:(id)sender;
-- (IBAction) account:(id)sender;
-- (IBAction) about:(id)sender;
-- (IBAction) showDisclaimer:(id)sender;
+- (void) setTitle:(NSString*)title;
 
 @end
