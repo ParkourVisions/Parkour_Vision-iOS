@@ -36,6 +36,7 @@
 #import "PKUIImageView.h"
 #import "ImageDetailViewController.h"
 #import "FlickrAPI.h"
+#import "Disclaimer.h"
 #import <math.h>
 
 #define THUMB_SIZE 64
@@ -141,10 +142,10 @@ static MapViewController *singleton;
 	self.navigationItem.rightBarButtonItem = uploadButton;
 	[uploadButton release];
 	
-	UIBarButtonItem *accountButton = 
-	[[UIBarButtonItem alloc] initWithTitle:@"Account" style:UIBarButtonItemStylePlain target:navLauncher action:@selector(onAccountButton:)];
-	self.navigationItem.leftBarButtonItem = accountButton;
-	[accountButton release];
+	//UIBarButtonItem *accountButton = 
+	//[[UIBarButtonItem alloc] initWithTitle:@"Settings" style:UIBarButtonItemStylePlain target:navLauncher action:@selector(onAccountButton:)];
+	//self.navigationItem.leftBarButtonItem = accountButton;
+	//[accountButton release];
 	
 	self.navigationItem.title = @"Browse";
 }
@@ -495,6 +496,10 @@ static MapViewController *singleton;
 	//[mapView setRegion:lastUserLocation];
 	self.navigationController.navigationBar.translucent = NO;
 	[[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
+}
+
+- (void) viewDidAppear:(BOOL)animated {
+	[Disclaimer showDisclaimerIfFirstTime];
 }
 
 

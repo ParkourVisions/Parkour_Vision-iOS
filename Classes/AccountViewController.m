@@ -26,10 +26,26 @@
 
 #import "AccountViewController.h"
 
-
 @implementation AccountViewController
 
-@synthesize username, authInterceptor;
+@synthesize authInterceptor, tableView;
+
+static AccountViewController *singleton;
+
+// called by system
++ (void)initialize
+{
+    static BOOL initialized = NO;
+    if(!initialized)
+    {
+        initialized = YES;
+        singleton = [[AccountViewController alloc] init];
+    }
+}
+
++ (AccountViewController*) getInstance {
+	return singleton;
+}
 
 // The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
 /*
@@ -42,11 +58,37 @@
 }
 */
 
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+	UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:nil];
+	cell.textLabel.text = @"User";
+	cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
+	
+	NSString *ustr = [[NSUserDefaults standardUserDefaults] stringForKey:@"username"];
+	if (ustr == nil) {
+		ustr = @"None";
+	}
+	
+	cell.detailTextLabel.text = ustr;
+	return [cell autorelease];
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+	return 1;
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+	return @"Flickr account";
+}
+
+- (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath {
+	[authInterceptor showAuthAlertDialog];
+}
+
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
     [super viewDidLoad];
 	authInterceptor = [[AuthInterceptor alloc] init];
-	self.navigationItem.title = @"Account";
+	self.navigationItem.title = @"Settings";
 }
 
 /*
@@ -73,18 +115,11 @@
 
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
-	
-	NSString *ustr = [[NSUserDefaults standardUserDefaults] stringForKey:@"username"];
-	if (ustr == nil) {
-		ustr = @"None";
-	}
-
-	NSLog(@"Username is: %@", ustr);
-	self.username.text = ustr;
+	[self reloadSettingsTable];
 }
 
-- (IBAction) setUserPressed:(id)sender {
-	[authInterceptor showAuthAlertDialog];
+- (void) reloadSettingsTable {
+	[tableView reloadData];
 }
 
 - (void)dealloc {

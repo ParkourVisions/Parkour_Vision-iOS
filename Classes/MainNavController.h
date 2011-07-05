@@ -29,11 +29,13 @@
 @class AccountViewController;
 @class MapViewController;
 @class UploadStatusController;
+@class AboutViewController;
 
 @interface MainNavController : UIViewController <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIAlertViewDelegate> {
 	UIView *mainView;
 	
 	AccountViewController *accountVC;
+	AboutViewController *aboutVC;
 	UIButton *uploadsButton;
 	MapViewController *mapViewController;
 	UploadStatusController *uploadStatusController;
@@ -42,13 +44,16 @@
 @property (nonatomic, retain) IBOutlet UIView *mainView;
 
 @property (nonatomic, retain) IBOutlet UIButton *uploadsButton;
-@property (nonatomic, retain) IBOutlet AccountViewController *accountVC;
+@property (nonatomic, retain) AccountViewController *accountVC;
 
 @property (nonatomic, retain) MapViewController *mapViewController;
 @property (nonatomic, retain) UploadStatusController *uploadStatusController;
+@property (nonatomic, retain) AboutViewController *aboutVC;
 
 - (IBAction) viewUploads:(id)sender;
 - (IBAction) browse:(id)sender;
 - (IBAction) account:(id)sender;
+- (IBAction) about:(id)sender;
+- (IBAction) showDisclaimer:(id)sender;
 
 @end
