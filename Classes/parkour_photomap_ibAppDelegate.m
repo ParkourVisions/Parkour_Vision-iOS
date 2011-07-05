@@ -28,6 +28,7 @@
 #import "FlickrAPI.h"
 #import "MapViewController.h"
 #import "NavLauncher.h"
+#import "AccountViewController.h"
 
 @implementation parkour_photomap_ibAppDelegate
 
@@ -41,14 +42,13 @@
     
     // Override point for customization after application launch.
 	MapViewController *mapViewController = [MapViewController getInstance];
-	navController2 = [[UINavigationController alloc] initWithRootViewController:mapViewController];
-	navController2.navigationBar.barStyle = UIBarStyleBlack;
+	//navController2 = [[UINavigationController alloc] initWithRootViewController:mapViewController];
+	//navController2.navigationBar.barStyle = UIBarStyleBlack;
 	
-	NavLauncher *launcher = [[NavLauncher alloc] initWithNavigationController:navController2];
-	//mapViewController.navLauncher = launcher;
+	NavLauncher *launcher = [[NavLauncher alloc] initWithNavigationController:navController];
 	[mapViewController setNavLauncher:launcher];
 	
-    [self.window addSubview:navController2.view];
+    [self.window addSubview:navController.view];
     [self.window makeKeyAndVisible];
     
 	[[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
@@ -107,6 +107,10 @@
 	[config setObject:result.token forKey:@"auth_token"];
 	[config setObject:result.userId forKey:@"nsid"];
 	[config setObject:result.username forKey:@"username"];	
+	
+	// update username label on settings page
+	AccountViewController *avc = [AccountViewController getInstance];
+	[avc reloadSettingsTable];
 	
 	return YES;
 }

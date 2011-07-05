@@ -28,6 +28,8 @@
 #import "AccountViewController.h"
 #import "MapViewController.h"
 #import "UploadStatusController.h"
+#import "AboutViewController.h"
+#import "Disclaimer.h"
 #import <ImageIO/CGImageProperties.h>
 #import <ImageIO/CGImageSource.h>
 #import <ImageIO/CGImageDestination.h>
@@ -35,7 +37,7 @@
 
 @implementation MainNavController
 
-@synthesize mainView, accountVC, mapViewController, uploadsButton, uploadStatusController;
+@synthesize mainView, accountVC, mapViewController, uploadsButton, uploadStatusController, aboutVC;
 
 
 // The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
@@ -54,6 +56,9 @@
     [super viewDidLoad];
 	mapViewController = [MapViewController getInstance];
 	uploadStatusController = [[UploadStatusController alloc] init];
+	aboutVC = [[AboutViewController alloc] init];
+	
+	[self browse:nil];
 }
 
 // Override to allow orientations other than the default portrait orientation.
@@ -74,6 +79,14 @@
 
 - (IBAction) viewUploads:(id)sender {
 	[self.navigationController pushViewController:uploadStatusController animated:YES];
+}
+
+- (IBAction) about:(id)sender {
+	[self.navigationController pushViewController:aboutVC animated:YES];
+}
+
+- (IBAction) showDisclaimer:(id)sender {
+	[Disclaimer showDisclaimerPopup];
 }
 
 
@@ -102,6 +115,7 @@
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
 	self.uploadStatusController = nil;
+	self.aboutVC = nil;
 }
 
 

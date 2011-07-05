@@ -27,14 +27,17 @@
 #import <UIKit/UIKit.h>
 #import "AuthInterceptor.h"
 
-@interface AccountViewController : UIViewController {
-	UILabel *username;
+@interface AccountViewController : UIViewController <UITableViewDataSource, UITableViewDelegate> {
+	
+	UITableView *tableView;	
 	AuthInterceptor *authInterceptor;
 }
 
-- (IBAction) setUserPressed:(id)sender;
-
-@property (nonatomic, retain) IBOutlet UILabel *username;
+@property (nonatomic, retain) IBOutlet UITableView *tableView;
 @property (nonatomic, retain) AuthInterceptor *authInterceptor;
+
++ (AccountViewController*) getInstance;
+
+- (void) reloadSettingsTable;
 
 @end

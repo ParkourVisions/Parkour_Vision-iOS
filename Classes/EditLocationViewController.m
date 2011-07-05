@@ -25,7 +25,9 @@
  */
 
 #import "EditLocationViewController.h"
-#import "PKAnnotation.h"
+#import "TextAnnotation.h"
+
+static NSString *pinHelpText = @"Hold and drag pin to move";
 
 @implementation EditLocationViewController
 
@@ -75,8 +77,15 @@
 - (MKAnnotationView *)mapView:(MKMapView *)theMapView viewForAnnotation:(id <MKAnnotation>)annotation {
 	MKPinAnnotationView *annView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:NULL];
 	annView.animatesDrop = YES;
-	annView.canShowCallout = NO;
+	annView.canShowCallout = YES;
 	annView.draggable = YES;
+	
+	// hack
+	// try to set label for annotation created by map view	
+	if ([annotation isKindOfClass:[MKUserLocation class]])
+    {
+        ((MKUserLocation *)annotation).title = pinHelpText;
+    }
 	
 	return annView;
 }
@@ -85,7 +94,7 @@
 	NSLog(@"Error finding user location: %@", [error localizedDescription]);
 	
 	// Cannot find user location, drop pin in the middle of map
-	PKAnnotation *ann = [[PKAnnotation alloc] init];
+	TextAnnotation *ann = [[TextAnnotation alloc] initWithTitle:pinHelpText];
 	CLLocationCoordinate2D coord = {0, 0};
 	ann.coordinate = coord;
 	
@@ -111,7 +120,7 @@
 		return coord;
 	}
 	
-	PKAnnotation *ann = [mapView.annotations objectAtIndex:0];
+	TextAnnotation *ann = [mapView.annotations objectAtIndex:0];
 	if (ann != nil) {
 		coord = ann.coordinate;
 	}
