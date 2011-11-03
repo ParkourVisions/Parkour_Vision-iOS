@@ -49,6 +49,10 @@ static NSOperationQueue *queue;
     }
 }
 
++ (int)getNumPartitions {
+	return ROWS*COLS;
+}
+
 // The search query is partitioned into geographical regions to ensure that we get results
 // from all areas of the map
 - (void) partitionAndSubmitSearch:(SearchRequest*)request {

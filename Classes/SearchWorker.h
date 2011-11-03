@@ -37,6 +37,7 @@
 // already loaded
 - (void) search:(SearchRequest*)request curImages:(NSDictionary*)curImageIds;
 - (void) updateModel:(SearchResult*)result;
+- (void) finishRequest:(SearchRequest*)request;
 - (void) setError:(SearchError*)error;
 
 @end

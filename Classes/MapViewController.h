@@ -27,12 +27,14 @@
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
 @class LinkedList;
+@class SearchRequest;
 #import "NavLauncher.h"
 
 @interface MapViewController : UIViewController <MKMapViewDelegate> {
 	UIView *parentView;
 	MKMapView *mapView;
 	UIScrollView *scrollView;
+	UIActivityIndicatorView *activityView;
 	
 	// model objects
 	LinkedList *visibleImages;
@@ -42,11 +44,14 @@
 	//MKCoordinateRegion lastUserLocation;
 	
 	NavLauncher *navLauncher;
+	
+	int subRequestsCompleted;
 }
 
 @property (nonatomic, retain) UIView *parentView;
 @property (nonatomic, retain) MKMapView *mapView;
 @property (nonatomic, retain) UIScrollView *scrollView;
+@property (nonatomic, retain) UIActivityIndicatorView *activityView;
 
 + (MapViewController*) getInstance;
 
@@ -63,5 +68,6 @@
 - (void) nearestNeighborSort;
 
 - (void) setSearchError:(NSError*)error;
+- (void) clearActivityIndicator:(SearchRequest*)partitionedRequest;
 
 @end
