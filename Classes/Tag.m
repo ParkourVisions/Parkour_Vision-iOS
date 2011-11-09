@@ -19,27 +19,30 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  * 
- * EditTagsViewController.h
+ * Tag.m
  * author: emancebo
- * 4/5/11
+ * 11/8/11
  */
 
-#import <UIKit/UIKit.h>
+#import "Tag.h"
 
+@implementation Tag
 
-@interface EditTagsViewController : UIViewController <UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource> {
-	UIToolbar *keyboardToolbar;
-	NSMutableArray *allTags;
-	UITextField *textField;
+@synthesize text, isSelected;
+
+- (id) initWithText:(NSString*)txt selected:(BOOL)selected {
+	
+	self = [super init];
+	if (self != nil) {
+		[self setText:txt];
+		[self setIsSelected:selected];
+	}
+	return self;
 }
 
-- (NSArray*) getTags;
-- (void) setupDefaults:(char **)tagArray selected:(BOOL)selected;
-
-@property (nonatomic, retain) IBOutlet UITableView *tableView;
-@property (nonatomic, retain) IBOutlet UIView *keyboardToolbar;
-@property (nonatomic, retain) IBOutlet UITextField *textField;
-
-- (IBAction)hideKeyboard:(id)sender;
+- (void) dealloc {
+	[text release];
+	[super dealloc];
+}
 
 @end
