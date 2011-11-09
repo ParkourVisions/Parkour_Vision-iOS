@@ -32,7 +32,7 @@
 
 }
 
-
 - (void) partitionAndSubmitSearch:(SearchRequest*)request;
++ (int) getNumPartitions;
 
 @end

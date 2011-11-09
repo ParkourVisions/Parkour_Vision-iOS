@@ -46,7 +46,7 @@ static int calloutButtonTagId = 0;
 
 @implementation MapViewController
 
-@synthesize parentView, mapView, scrollView;
+@synthesize parentView, mapView, scrollView, activityView;
 
 // The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
 /*
@@ -98,6 +98,7 @@ static MapViewController *singleton;
 		visibleImages = [[LinkedList alloc] init];
 		annotations = [[NSMutableDictionary alloc]  init];
 		isCurrentLocationSet = NO;
+		subRequestsCompleted = 0;
 		
 		parentView = [[UIView alloc] initWithFrame:CGRectMake(0, 64, 320, 416)];
 		
@@ -111,6 +112,14 @@ static MapViewController *singleton;
 		mapView.showsUserLocation = YES;
 		mapView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 		[parentView addSubview:mapView];
+		
+		activityView = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(320-48, 0, 48, 48)];
+		activityView.hidesWhenStopped = YES;
+		activityView.activityIndicatorViewStyle = UIActivityIndicatorViewStyleGray;
+		activityView.userInteractionEnabled = NO;
+		activityView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
+		//[activityView startAnimating];
+		[parentView addSubview:activityView];
 		
 		/*
 		// setup buttons for upload and account views
@@ -177,14 +186,28 @@ static MapViewController *singleton;
 	request.minCoord = minCoord;
 	request.maxCoord = maxCoord;
 	
+	[activityView startAnimating];	
+	subRequestsCompleted = 0;
+	
 	SearchEngine *engine = [[SearchEngine alloc] init];
 	[engine partitionAndSubmitSearch:request];
-	
+		
 	//NSLog(@"Going to release request %p", request);
 	
 	[request release];
 	[engine release];
 	//NSLog(@"Exiting regionDidChangeAnimated");
+}
+
+- (void) clearActivityIndicator:(SearchRequest*)partitionedRequest {
+	if (partitionedRequest.rid == [RequestIdGenerator getCurrentId]) {
+		++subRequestsCompleted;
+	}
+	
+	if (subRequestsCompleted == [SearchEngine getNumPartitions]) {
+		[activityView stopAnimating];
+		subRequestsCompleted = 0;
+	}
 }
 
 - (NSDictionary*) getImageIdSet {
@@ -307,8 +330,7 @@ static MapViewController *singleton;
 			pkView.image = [pkView.pkImage getThumbImage];
 			node = node.next;
 		}
-	}
-	
+	}	
 }
 
 - (double) distBetween:(CLLocationCoordinate2D)coordA coordB:(CLLocationCoordinate2D) coordB {

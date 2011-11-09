@@ -25,10 +25,36 @@
  */
 
 #import "EditTagsViewController.h"
+#import "Tag.h"
+
+static char *CHECKED_DEFAULTS[] = {"pktrainingspot", "parkour", '\0'};
+static char *UNCHECKED_DEFAULTS[] = 
+	{
+		"accessramp", 
+		"benches", 
+		"bollards", 
+		"college", 
+		"curbs", 
+		"ledges", 
+		"park", 
+		"parkinggarage", 
+		"playground", 
+		"railings", 
+		"rocks", 
+		"scaffolding", 
+		"stairs", 
+		"trees", 
+		"walls",
+		'\0'
+	};
+
+static int CURRENT_TAG_IDX = 0;
+static int SUGGESTED_TAG_IDX = 1;
+static int NUM_SECTIONS = 2;
 
 @implementation EditTagsViewController
 
-@synthesize keyboardToolbar, tag1, tag2, tag3, tag4, tag5, tag6;
+@synthesize keyboardToolbar, textField, tableView;
 
 // The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
 /*
@@ -47,24 +73,100 @@
     [super viewDidLoad];
 	
 	allTags = [[NSMutableArray alloc] init];
-	[allTags addObject:tag1];
-	[allTags addObject:tag2];
-	[allTags addObject:tag3];
-	[allTags addObject:tag4];
-	[allTags addObject:tag5];
-	[allTags addObject:tag6];
+	for (int i=0; i < NUM_SECTIONS; ++i) {
+		[allTags addObject:[[[NSMutableArray alloc] init] autorelease]];
+	}
+	
+	[self setupDefaults:CHECKED_DEFAULTS selected:YES];
+	[self setupDefaults:UNCHECKED_DEFAULTS selected:NO];
 }
 
 - (NSArray*) getTags {
 	NSMutableArray *tagStrings = [[NSMutableArray alloc] init];
 	
-	for (UITextField *field in allTags) {
-		if ([field.text length] != 0) {
-			[tagStrings addObject:field.text];
+	for (int i=0; i < NUM_SECTIONS; ++i) {
+		for (Tag *tag in [allTags objectAtIndex:i]) {
+			if (tag.isSelected) {
+				[tagStrings addObject:tag.text];
+			}
 		}
 	}
 	
-	return [tagStrings autorelease];;
+	return [tagStrings autorelease];
+}
+
+- (void) setupDefaults:(char **)tagArray selected:(BOOL)selected {
+	
+	int idx = SUGGESTED_TAG_IDX;
+	if (selected) {
+		idx = CURRENT_TAG_IDX;
+	}
+	
+	int i=0;
+	char *tagString = tagArray[i];
+	while (tagString != NULL) {
+		NSString *str = [NSString stringWithUTF8String:tagString];
+		NSMutableArray *arr = [allTags objectAtIndex:idx];
+		[arr addObject:[[[Tag alloc] initWithText:str selected:selected] autorelease]];
+		tagString = tagArray[++i];
+	}
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tv cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+	
+	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"EditTagsTableCell"];
+	
+	if (cell == nil) {
+		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"EditTagsTableCell"] autorelease];
+		cell.selectionStyle = UITableViewCellSelectionStyleNone;	
+	}
+	
+	Tag *tag = [[allTags objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
+	cell.textLabel.text = tag.text;
+	
+	if (tag.isSelected == YES) {
+		cell.accessoryType = UITableViewCellAccessoryCheckmark;
+	}
+	else {
+		cell.accessoryType = UITableViewCellAccessoryNone;
+	}
+	
+	return cell;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+	return [[allTags objectAtIndex:section] count];
+}
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+	return NUM_SECTIONS;
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+	
+	if (section == CURRENT_TAG_IDX) {
+		return @"Current Tags";
+	}
+	else {
+		return @"Suggested Tags";
+	}
+}
+
+- (void)tableView:(UITableView *)theTableView didSelectRowAtIndexPath:(NSIndexPath *)newIndexPath {
+	
+    [theTableView deselectRowAtIndexPath:[theTableView indexPathForSelectedRow] animated:NO];
+	
+    UITableViewCell *cell = [theTableView cellForRowAtIndexPath:newIndexPath];
+	
+	Tag *tag = [[allTags objectAtIndex:newIndexPath.section] objectAtIndex:newIndexPath.row];
+    if (cell.accessoryType == UITableViewCellAccessoryNone) {
+        cell.accessoryType = UITableViewCellAccessoryCheckmark;
+		tag.isSelected = YES;
+    } 
+	else if (cell.accessoryType == UITableViewCellAccessoryCheckmark) {
+        cell.accessoryType = UITableViewCellAccessoryNone;
+		tag.isSelected = NO;
+    }	
 }
 
 /*
@@ -76,9 +178,8 @@
 */
 
 - (IBAction)hideKeyboard:(id)sender {
-	for (UITextField *tf in allTags) {
-		[tf resignFirstResponder];
-	}
+	self.textField.text = @"";
+	[self.textField resignFirstResponder];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -117,6 +218,19 @@
     [UIView commitAnimations];
 }
 
+- (BOOL)textFieldShouldReturn:(UITextField *)tf {
+	
+	NSString *text = tf.text;
+	
+	if (text.length > 0) {
+		[[allTags objectAtIndex:CURRENT_TAG_IDX] addObject:[[[Tag alloc] initWithText:text selected:YES] autorelease]];
+		tf.text = @"";
+	}
+	[tf resignFirstResponder];
+	[tableView reloadData];
+	
+	return YES;
+}
 
 - (void)didReceiveMemoryWarning {
     // Releases the view if it doesn't have a superview.

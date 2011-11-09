@@ -40,64 +40,75 @@
 	static volatile int executed = 0;
 	static volatile int cancelled = 0;
 	
-	// cancel this unit of work if rid is stale
-	int curRid = [RequestIdGenerator getCurrentId];
-	if (curRid > request.rid) {
-		OSAtomicIncrement32(&cancelled);
-		NSLog(@"cancelled = %d", cancelled);
-		return;
-	}
-	
-	// add delay to get more cancels of unecessary operations
-	[NSThread sleepForTimeInterval:1.0]; // 2.0 simulation
-	curRid = [RequestIdGenerator getCurrentId];
-	if (curRid > request.rid) {
-		OSAtomicIncrement32(&cancelled);
-		NSLog(@"cancelled = %d", cancelled);
-		return;
-	}
-	
-	OSAtomicIncrement32(&executed);
-	NSLog(@"executed = %d", executed);
-	
-	// get relevant image IDs for this geographical area by calling
-	// flickr search api
-	NSError *error = nil;
-	NSMutableArray *imageList = [FlickrAPI searchRegionMin:request.minCoord max:request.maxCoord error:&error];
-	
-	if (error) {
-		SearchError *searchError = [[SearchError alloc] init];
-		searchError.requestId = request.rid;
-		searchError.error = error;
-		[self performSelectorOnMainThread:@selector(setError:) withObject:searchError waitUntilDone:NO];
-		NSLog(@"Got error in call to searchRegionMin for rid: %d", searchError.requestId);
-		return;
-	}
-	
-	for (PKImage *image in imageList) {
-		// break out if another request comes in
-		curRid = [RequestIdGenerator getCurrentId];
-		if (curRid > request.rid)
-			break;
+	@try {
 		
-		// only fetch data for imageIds that are not already in the model
-		if ([curImageIds objectForKey:image.imageId] == nil) {
-			// eager load coordinates and thumbnail
-			[image loadInfo];
-			[image getThumbImage];
-			
-			NSMutableArray *pkImages = [[NSMutableArray alloc] init];
-			[pkImages addObject:image];
-			SearchResult *result = [[SearchResult alloc] initWithRid:request.rid images:pkImages];
-			[pkImages release];	
-			
-			// check rid again and update model on main thread
-			[self performSelectorOnMainThread:@selector(updateModel:) withObject:result waitUntilDone:NO];
-			[result release];
+		// cancel this unit of work if rid is stale
+		int curRid = [RequestIdGenerator getCurrentId];
+		if (curRid > request.rid) {
+			OSAtomicIncrement32(&cancelled);
+			NSLog(@"cancelled = %d", cancelled);
+			return;
 		}
+		
+		// add delay to get more cancels of unecessary operations
+		[NSThread sleepForTimeInterval:1.0]; // 2.0 simulation
+		curRid = [RequestIdGenerator getCurrentId];
+		if (curRid > request.rid) {
+			OSAtomicIncrement32(&cancelled);
+			NSLog(@"cancelled = %d", cancelled);
+			return;
+		}
+		
+		OSAtomicIncrement32(&executed);
+		NSLog(@"executed = %d", executed);
+		
+		// get relevant image IDs for this geographical area by calling
+		// flickr search api
+		NSError *error = nil;
+		NSMutableArray *imageList = [FlickrAPI searchRegionMin:request.minCoord max:request.maxCoord error:&error];
+		
+		if (error) {
+			SearchError *searchError = [[SearchError alloc] init];
+			searchError.requestId = request.rid;
+			searchError.error = error;
+			[self performSelectorOnMainThread:@selector(setError:) withObject:searchError waitUntilDone:NO];
+			NSLog(@"Got error in call to searchRegionMin for rid: %d", searchError.requestId);
+			return;
+		}
+		
+		for (PKImage *image in imageList) {
+			// break out if another request comes in
+			curRid = [RequestIdGenerator getCurrentId];
+			if (curRid > request.rid)
+				break;
+			
+			// only fetch data for imageIds that are not already in the model
+			if ([curImageIds objectForKey:image.imageId] == nil) {
+				// eager load coordinates and thumbnail
+				[image loadInfo];
+				[image getThumbImage];
+				
+				NSMutableArray *pkImages = [[NSMutableArray alloc] init];
+				[pkImages addObject:image];
+				SearchResult *result = [[SearchResult alloc] initWithRid:request.rid images:pkImages];
+				[pkImages release];	
+				
+				// check rid again and update model on main thread
+				[self performSelectorOnMainThread:@selector(updateModel:) withObject:result waitUntilDone:YES];
+				[result release];
+			}
+		}
+	}
+	@finally {
+		[self performSelectorOnMainThread:@selector(finishRequest:) withObject:request waitUntilDone:YES];
 	}
 	
 	//[request release]; // allocated by search engine
+}
+
+- (void) finishRequest:(SearchRequest*)request {
+	MapViewController *mapViewController = [MapViewController getInstance];
+	[mapViewController clearActivityIndicator:request];
 }
 
 - (void) updateModel:(SearchResult*)result {
