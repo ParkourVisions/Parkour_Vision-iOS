@@ -545,8 +545,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+<<<<<<< HEAD
 				CODE_SIGN_ENTITLEMENTS = Entitlements.plist;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+=======
+				CODE_SIGN_ENTITLEMENTS = "~/Dropbox/dev.parkourvisions.org/PKV_iOSapp/Entitlements.plist";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Ed Mancebo (W9NE4254GB)";
+>>>>>>> I don't think I changed anything...
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -557,6 +562,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = parkour_photomap_ib_Prefix.pch;
 				INFOPLIST_FILE = "parkour_photomap_ib-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
 				PRODUCT_NAME = "parkour-photomap-ib";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 			};
@@ -566,7 +572,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_ENTITLEMENTS = "~/Projects/parkour-photomap-ib/Entitlements.plist";
+				CODE_SIGN_ENTITLEMENTS = "~/Dropbox/dev.parkourvisions.org/PKV_iOSapp/Entitlements.plist";
 				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -575,6 +581,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = parkour_photomap_ib_Prefix.pch;
 				INFOPLIST_FILE = "parkour_photomap_ib-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
 				PRODUCT_NAME = "parkour-photomap-ib";
 				VALIDATE_PRODUCT = YES;
 			};
