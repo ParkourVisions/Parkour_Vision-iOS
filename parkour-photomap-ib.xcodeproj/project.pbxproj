@@ -16,6 +16,7 @@
 		1B72F00B134C12FF00E9CBCC /* MainNavController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B72F009134C12FF00E9CBCC /* MainNavController.m */; };
 		1B72F00C134C12FF00E9CBCC /* MainNavController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1B72F00A134C12FF00E9CBCC /* MainNavController.xib */; };
 		1B72F037134C1E5F00E9CBCC /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B72F036134C1E5F00E9CBCC /* MapKit.framework */; };
+		1B7C5AE81469C98600BC3A62 /* Tag.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B7C5AE71469C98600BC3A62 /* Tag.m */; };
 		1B8755D6134C373000E11BBF /* EditLocationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B8755D4134C373000E11BBF /* EditLocationViewController.m */; };
 		1B8755D7134C373000E11BBF /* EditLocationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1B8755D5134C373000E11BBF /* EditLocationViewController.xib */; };
 		1B875602134C39F600E11BBF /* EditInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B875600134C39F600E11BBF /* EditInfoViewController.m */; };
@@ -92,6 +93,8 @@
 		1B72F009134C12FF00E9CBCC /* MainNavController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainNavController.m; sourceTree = "<group>"; };
 		1B72F00A134C12FF00E9CBCC /* MainNavController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainNavController.xib; sourceTree = "<group>"; };
 		1B72F036134C1E5F00E9CBCC /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		1B7C5AE61469C98600BC3A62 /* Tag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tag.h; sourceTree = "<group>"; };
+		1B7C5AE71469C98600BC3A62 /* Tag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tag.m; sourceTree = "<group>"; };
 		1B8755D3134C373000E11BBF /* EditLocationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditLocationViewController.h; sourceTree = "<group>"; };
 		1B8755D4134C373000E11BBF /* EditLocationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditLocationViewController.m; sourceTree = "<group>"; };
 		1B8755D5134C373000E11BBF /* EditLocationViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EditLocationViewController.xib; sourceTree = "<group>"; };
@@ -303,6 +306,8 @@
 				1B40E50A1378B3A800CCACE9 /* UploadTask.m */,
 				1BA49B8113C2BD0500C6EF74 /* TextAnnotation.h */,
 				1BA49B8213C2BD0500C6EF74 /* TextAnnotation.m */,
+				1B7C5AE61469C98600BC3A62 /* Tag.h */,
+				1B7C5AE71469C98600BC3A62 /* Tag.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -535,6 +540,7 @@
 				1BA49AB013C2A50D00C6EF74 /* AboutViewController.m in Sources */,
 				1BA49B1F13C2AFF200C6EF74 /* Disclaimer.m in Sources */,
 				1BA49B8313C2BD0500C6EF74 /* TextAnnotation.m in Sources */,
+				1B7C5AE81469C98600BC3A62 /* Tag.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
