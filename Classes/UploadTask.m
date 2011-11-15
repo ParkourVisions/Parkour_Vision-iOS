@@ -54,7 +54,7 @@
 	NSLog(@"Uploading: %@", [uploadInfo description]);
 	
 	// ID of the global parkour group in flickr
-	static NSString *PK_GROUP_ID = @"1613155@N25";
+	static NSString *PK_GROUP_ID = @"819314@N20";
 	
 	dispatch_async(dispatch_get_global_queue(0, 0), ^{
 		
