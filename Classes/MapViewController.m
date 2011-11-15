@@ -279,7 +279,7 @@ static MapViewController *singleton;
 		PKImage *image = [pkImages objectAtIndex:i];
 		PKAnnotation *annotation = [[PKAnnotation alloc] init];
 		annotation.image = image;
-		annotation.coordinate = image.coord;
+		[annotation setCoordinate:image.coord];
 		
 		//NSLog(@"Add annotation %p", annotation);
 		//NSLog(@"Adding annotation at (%f, %f) for imageId %@", annotation.coordinate.latitude, annotation.coordinate.longitude, image.imageId);

@@ -96,7 +96,7 @@ static NSString *pinHelpText = @"Hold and drag pin to move";
 	// Cannot find user location, drop pin in the middle of map
 	TextAnnotation *ann = [[TextAnnotation alloc] initWithTitle:pinHelpText];
 	CLLocationCoordinate2D coord = {0, 0};
-	ann.coordinate = coord;
+	[ann setCoordinate:coord];
 	
 	[mapView addAnnotation:ann];
 	[ann release];

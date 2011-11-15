@@ -49,5 +49,9 @@
 	mTitle = title;
 }
 
+- (void)setCoordinate:(CLLocationCoordinate2D)newCoordinate {
+	coordinate = newCoordinate;
+}
+
 @end
 
