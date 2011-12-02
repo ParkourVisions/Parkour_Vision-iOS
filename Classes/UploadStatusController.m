@@ -150,15 +150,15 @@
 	editTagsVC = [[EditTagsViewController alloc] init];
 	
 	// create tab bar items
-	UITabBarItem *tabItem = [[UITabBarItem alloc] initWithTitle:@"Set Location" image:nil tag:0];
+	UITabBarItem *tabItem = [[UITabBarItem alloc] initWithTitle:@"Set Location" image:[UIImage imageNamed:@"tab_bar_globe.png"] tag:0];
 	editLocationVC.tabBarItem = tabItem;
 	[tabItem release];
 	
-	tabItem = [[UITabBarItem alloc] initWithTitle:@"Set Title" image:nil tag:1];
+	tabItem = [[UITabBarItem alloc] initWithTitle:@"Set Title" image:[UIImage imageNamed:@"tab_bar_desc.png"] tag:1];
 	editInfoVC.tabBarItem = tabItem;
 	[tabItem release];
 	
-	tabItem = [[UITabBarItem alloc] initWithTitle:@"Set Tags" image:nil tag:2];
+	tabItem = [[UITabBarItem alloc] initWithTitle:@"Set Tags" image:[UIImage imageNamed:@"tab_bar_tags.png"] tag:2];
 	editTagsVC.tabBarItem = tabItem;
 	[tabItem release];
 	

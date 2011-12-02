@@ -46,7 +46,7 @@ static int calloutButtonTagId = 0;
 
 @implementation MapViewController
 
-@synthesize parentView, mapView, scrollView, activityView;
+@synthesize parentView, mapView, scrollView, activityView, mapTypeSwitch;
 
 // The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
 /*
@@ -106,12 +106,28 @@ static MapViewController *singleton;
 		scrollView.backgroundColor = [UIColor blackColor];
 		scrollView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
 		[parentView addSubview:scrollView];
+		[scrollView release];
 		
 		mapView = [[MKMapView alloc] initWithFrame:CGRectMake(64, 0, 256, 416)];
 		mapView.delegate = self;
 		mapView.showsUserLocation = YES;
 		mapView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+		//mapView.mapType = MKMapTypeSatellite;
 		[parentView addSubview:mapView];
+		[mapView release];
+		
+		mapTypeSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(220, 384, 92, 24)];
+		mapTypeSwitch.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
+		[mapTypeSwitch addTarget: self action: @selector(toggleMapType:) forControlEvents:UIControlEventValueChanged];
+		[parentView addSubview:mapTypeSwitch];
+		[mapTypeSwitch release];
+		
+		UILabel *switchLabel = [[UILabel alloc] initWithFrame:CGRectMake(148, 384, 72, 24)];
+		switchLabel.text = @"Satellite:";
+		switchLabel.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
+		switchLabel.backgroundColor = [UIColor clearColor];
+		[parentView addSubview:switchLabel];
+		[switchLabel release];
 		
 		activityView = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(320-48, 0, 48, 48)];
 		activityView.hidesWhenStopped = YES;
@@ -120,6 +136,7 @@ static MapViewController *singleton;
 		activityView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
 		//[activityView startAnimating];
 		[parentView addSubview:activityView];
+		[activityView release];
 		
 		/*
 		// setup buttons for upload and account views
@@ -488,6 +505,16 @@ static MapViewController *singleton;
 	if (!isCurrentLocationSet) {
 		[mapView setRegion:region animated:YES];
 		isCurrentLocationSet = YES;
+	}
+}
+
+- (void) toggleMapType: (id)sender {
+	UISwitch *mapSwitch = (UISwitch *) sender;
+	if (mapSwitch.on) {
+		mapView.mapType = MKMapTypeSatellite;
+	}
+	else {
+		mapView.mapType = MKMapTypeStandard;
 	}
 }
 

@@ -50,6 +50,7 @@
 
 @property (nonatomic, retain) UIView *parentView;
 @property (nonatomic, retain) MKMapView *mapView;
+@property (nonatomic, retain) UISwitch *mapTypeSwitch;
 @property (nonatomic, retain) UIScrollView *scrollView;
 @property (nonatomic, retain) UIActivityIndicatorView *activityView;
 
@@ -69,5 +70,7 @@
 
 - (void) setSearchError:(NSError*)error;
 - (void) clearActivityIndicator:(SearchRequest*)partitionedRequest;
+
+- (void) toggleMapType: (id)sender;
 
 @end
