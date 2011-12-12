@@ -76,7 +76,7 @@ static NSString *pinHelpText = @"Hold and drag pin to move";
 
 - (MKAnnotationView *)mapView:(MKMapView *)theMapView viewForAnnotation:(id <MKAnnotation>)annotation {
 	MKPinAnnotationView *annView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:NULL];
-	annView.animatesDrop = YES;
+	annView.animatesDrop = NO;
 	annView.canShowCallout = YES;
 	annView.draggable = YES;
 	

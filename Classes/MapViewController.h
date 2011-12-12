@@ -50,7 +50,7 @@
 
 @property (nonatomic, retain) UIView *parentView;
 @property (nonatomic, retain) MKMapView *mapView;
-@property (nonatomic, retain) UISwitch *mapTypeSwitch;
+@property (nonatomic, retain) UISegmentedControl *mapTypeControl;
 @property (nonatomic, retain) UIScrollView *scrollView;
 @property (nonatomic, retain) UIActivityIndicatorView *activityView;
 

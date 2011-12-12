@@ -46,7 +46,7 @@ static int calloutButtonTagId = 0;
 
 @implementation MapViewController
 
-@synthesize parentView, mapView, scrollView, activityView, mapTypeSwitch;
+@synthesize parentView, mapView, scrollView, activityView, mapTypeControl;
 
 // The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
 /*
@@ -116,18 +116,14 @@ static MapViewController *singleton;
 		[parentView addSubview:mapView];
 		[mapView release];
 		
-		mapTypeSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(220, 384, 92, 24)];
-		mapTypeSwitch.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
-		[mapTypeSwitch addTarget: self action: @selector(toggleMapType:) forControlEvents:UIControlEventValueChanged];
-		[parentView addSubview:mapTypeSwitch];
-		[mapTypeSwitch release];
-		
-		UILabel *switchLabel = [[UILabel alloc] initWithFrame:CGRectMake(148, 384, 72, 24)];
-		switchLabel.text = @"Satellite:";
-		switchLabel.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
-		switchLabel.backgroundColor = [UIColor clearColor];
-		[parentView addSubview:switchLabel];
-		[switchLabel release];
+		mapTypeControl = [[UISegmentedControl alloc] initWithFrame:CGRectMake(220, 376, 92, 32)];
+		mapTypeControl.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
+		[mapTypeControl insertSegmentWithTitle:@"Map" atIndex:0 animated:NO];
+		[mapTypeControl insertSegmentWithTitle:@"Sat" atIndex:1 animated:NO];
+		mapTypeControl.selectedSegmentIndex = 0;
+		[mapTypeControl addTarget: self action: @selector(toggleMapType:) forControlEvents:UIControlEventValueChanged];
+		[parentView addSubview:mapTypeControl];
+		[mapTypeControl release];
 		
 		activityView = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(320-48, 0, 48, 48)];
 		activityView.hidesWhenStopped = YES;
@@ -509,8 +505,9 @@ static MapViewController *singleton;
 }
 
 - (void) toggleMapType: (id)sender {
-	UISwitch *mapSwitch = (UISwitch *) sender;
-	if (mapSwitch.on) {
+	
+	UISegmentedControl *mapControl = (UISegmentedControl *) sender;
+	if (mapControl.selectedSegmentIndex == 1) {
 		mapView.mapType = MKMapTypeSatellite;
 	}
 	else {
