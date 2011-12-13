@@ -29,10 +29,14 @@
 
 @interface EditLocationViewController : UIViewController <MKMapViewDelegate> {
 	MKMapView *mapView;
+    UISegmentedControl *mapTypeControl;
 }
 
 @property (nonatomic, retain) IBOutlet MKMapView *mapView;
+@property (nonatomic, retain) IBOutlet UISegmentedControl *mapTypeControl;
 
 - (CLLocationCoordinate2D) getCoord;
+
+- (IBAction) toggleMapType: (id)sender;
 
 @end

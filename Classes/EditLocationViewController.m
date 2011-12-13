@@ -31,7 +31,7 @@ static NSString *pinHelpText = @"Hold and drag pin to move";
 
 @implementation EditLocationViewController
 
-@synthesize mapView;
+@synthesize mapView, mapTypeControl;
 
 // The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
 /*
@@ -133,6 +133,17 @@ static NSString *pinHelpText = @"Hold and drag pin to move";
 	double dx = mapView.region.span.longitudeDelta;
 	
 	NSLog(@"Span =  x:%f y%f", dx, dy);
+}
+
+- (void) toggleMapType: (id)sender {
+	
+	UISegmentedControl *mapControl = (UISegmentedControl *) sender;
+	if (mapControl.selectedSegmentIndex == 1) {
+		mapView.mapType = MKMapTypeSatellite;
+	}
+	else {
+		mapView.mapType = MKMapTypeStandard;
+	}
 }
 
 /*
