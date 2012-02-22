@@ -19,18 +19,18 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  * 
- * parkour_photomap_ibAppDelegate.m
+ * parkour_vision_AppDelegate.m
  * author: emancebo
  * 4/5/11
  */
 
-#import "parkour_photomap_ibAppDelegate.h"
+#import "parkour_vision_AppDelegate.h"
 #import "FlickrAPI.h"
 #import "MapViewController.h"
 #import "NavLauncher.h"
 #import "AccountViewController.h"
 
-@implementation parkour_photomap_ibAppDelegate
+@implementation parkour_vision_AppDelegate
 
 @synthesize window, navController;
 

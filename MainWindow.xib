@@ -225,7 +225,7 @@
 					</object>
 					<string>{{521, 243}, {320, 480}}</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-					<string>parkour_photomap_ibAppDelegate</string>
+					<string>parkour_vision_AppDelegate</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				</object>
 			</object>
@@ -405,7 +405,7 @@
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
-					<string key="className">parkour_photomap_ibAppDelegate</string>
+					<string key="className">parkour_vision_AppDelegate</string>
 					<string key="superclassName">NSObject</string>
 					<object class="NSMutableDictionary" key="outlets">
 						<bool key="EncodedWithXMLCoder">YES</bool>
@@ -441,11 +441,11 @@
 					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">Classes/parkour_photomap_ibAppDelegate.h</string>
+						<string key="minorKey">Classes/parkour_vision_AppDelegate.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
-					<string key="className">parkour_photomap_ibAppDelegate</string>
+					<string key="className">parkour_vision_AppDelegate</string>
 					<string key="superclassName">NSObject</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBUserSource</string>
@@ -709,7 +709,7 @@
 			<integer value="3100" key="NS.object.0"/>
 		</object>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
-		<string key="IBDocument.LastKnownRelativeProjectPath">parkour-photomap-ib.xcodeproj</string>
+		<string key="IBDocument.LastKnownRelativeProjectPath">parkour_vision.xcodeproj</string>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 		<string key="IBCocoaTouchPluginVersion">132</string>
 	</data>

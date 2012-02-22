@@ -1,0 +1,8 @@
+//
+// Prefix header for all source files of the 'parkour_vision' target in the 'parkour_vision' project
+//
+
+#ifdef __OBJC__
+    #import <Foundation/Foundation.h>
+    #import <UIKit/UIKit.h>
+#endif

@@ -19,14 +19,14 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  * 
- * parkour_photomap_ibAppDelegate.h
+ * parkour_vision_AppDelegate.h
  * author: emancebo
  * 4/5/11
  */
 
 #import <UIKit/UIKit.h>
 
-@interface parkour_photomap_ibAppDelegate : NSObject <UIApplicationDelegate> {
+@interface parkour_vision_AppDelegate : NSObject <UIApplicationDelegate> {
     UIWindow *window;
 	UINavigationController *navController;
 	UINavigationController *navController2;
