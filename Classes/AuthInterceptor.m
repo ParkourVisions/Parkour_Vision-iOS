@@ -42,7 +42,7 @@
 		NSString *API_KEY = @"2099cafa3dc4df6fec7bb0e5d7aec256";
         
         NSString *urlString = 
-		[NSString stringWithFormat:@"http://flickr.com/services/auth/fresh?api_key=%@&perms=write&api_sig=%@",
+		[NSString stringWithFormat:@"http://m.flickr.com/services/auth/fresh?api_key=%@&perms=write&api_sig=%@",
 		 API_KEY, @"7575cf78a09e9ae84b5966eda7388ec9"];
         
         NSURL *loginURL = [NSURL URLWithString:urlString];

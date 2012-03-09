@@ -27,7 +27,7 @@
 			<string>com.pkvision</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>pkvision</string>
+				<string>pkphotomap</string>
 			</array>
 		</dict>
 	</array>
