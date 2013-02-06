@@ -89,7 +89,7 @@
 		imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
 	}
 	
-	[self presentModalViewController:imagePicker animated:YES];
+	[self presentViewController:imagePicker animated:YES completion:nil];
 	[imagePicker release];
 }
 
@@ -140,8 +140,8 @@
 		}
 	}
 	
-	[self dismissModalViewControllerAnimated:NO];
-	[self presentModalViewController:uploadNavController animated:NO];
+	[self dismissViewControllerAnimated:NO completion:nil];
+	[self presentViewController:uploadNavController animated:NO completion:nil];
 }
 
 - (void) configureUploadController {
@@ -187,12 +187,12 @@
 	
 	[tableView reloadData];
 	
-	[self dismissModalViewControllerAnimated:YES];
+	[self dismissViewControllerAnimated:YES completion:nil];
 	
 }
 
 - (IBAction) cancelUploadPhoto:(id)sender {
-	[self dismissModalViewControllerAnimated:YES];
+	[self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tv cellForRowAtIndexPath:(NSIndexPath *)indexPath {
